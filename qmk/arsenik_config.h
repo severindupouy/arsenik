@@ -35,7 +35,7 @@
  */
 
 
-#define ARSENIK_PLACEHOLDER_LAYOUT
+#define ARSENIK_LAYOUT_split_3x6_3
 /* NOTE: This line gets automatically filled in by the install script, but the
  * underlying layout may not yet exist, and keyboard specific layout may have
  * other variants you might want to check out.
@@ -63,7 +63,7 @@
  * When inactive, this layer is discarded and replaced by AltGr.
  */
 
-// #define ARSENIK_ENABLE_HRM
+#define ARSENIK_ENABLE_HRM
 /* When active, adds a Meta, Ctrl and Alt home-row-mod on respectively s/l,
  * d/k or f/j on a Qwerty keyboard. Those home-row-mods stay on those exact
  * keys regardless of the layout being used, meaning they would be on r/i, s/e
@@ -109,7 +109,7 @@
  * (Requires `ARSENIK_ENABLE_SELENIUM_VARIANT`)
  */
 
-#define SELENIUM_RESTORE_SPACE
+// #define SELENIUM_RESTORE_SPACE
 /* Having Space accessible to only one thumb may create some problems, especially
  * when trying to type Shift + Space or Lafayette / AltGr + Space (depending if
  * your space key is on your left or right hand). When active, backspace gets
@@ -123,9 +123,9 @@
 // on keyboard layout used on your computer. If they don’t match up some
 // characters may not be correctly placed or missing entirely. If multiple
 // options are toggled at the same time, the first one is chosen.
-#define ARSENIK_HOST_LAYOUT_QWERTY
+// #define ARSENIK_HOST_LAYOUT_QWERTY
 // #define ARSENIK_HOST_LAYOUT_AZERTY
-// #define ARSENIK_HOST_LAYOUT_ERGOL
+#define ARSENIK_HOST_LAYOUT_ERGOL
 // #define ARSENIK_HOST_LAYOUT_BEPO
 // #define ARSENIK_HOST_LAYOUT_DVORAK
 // #define ARSENIK_HOST_LAYOUT_COLEMAK
