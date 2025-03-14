@@ -13,10 +13,10 @@
 
 ;; Timing variables for tap-hold effects.
 (defvar
-  ;; The key must be pressed twice in 200ms to enable repetitions.
-  tap_timeout 200
-  ;; The key must be held 200ms to become a layer shift.
-  hold_timeout 200
+  ;; The key must be pressed twice in 150ms to enable repetitions.
+  tap_timeout 150
+  ;; The key must be held 150ms to become a layer shift.
+  hold_timeout 150
   ;; Slightly higher value for typing keys, to prevent unexpected hold effect.
   long_hold_timeout 300
 )
@@ -38,9 +38,9 @@
 ;; `Base` layer: standard or dual keys? (layer-taps, homerow mods?)
 ;; If you just want angle mod, you still have to enable the standard base.
 
-(include deflayer/base.kbd)  ;; standard keyboard behavior
+;; (include deflayer/base.kbd)  ;; standard keyboard behavior
 ;; (include deflayer/base_lt.kbd)  ;; layer-taps on both thumb keys
-;; (include deflayer/base_lt_hrm.kbd)  ;; layer-taps + home-row mods
+(include deflayer/base_lt_hrm.kbd)  ;; layer-taps + home-row mods
 
 ;; Note: not enabling layer-taps here makes the rest of the file useless.
 
@@ -48,17 +48,17 @@
 ;;-----------------------------------------------------------------------------
 ;; `Symbols` layer
 
-(include deflayer/symbols_noop.kbd)  ;; AltGr stays as-is
+;; (include deflayer/symbols_noop.kbd)  ;; AltGr stays as-is
 ;; (include deflayer/symbols_lafayette.kbd)  ;; AltGr programmation layer like Ergo‑L
 ;; (include deflayer/symbols_noop_num.kbd)  ;; AltGr stays as-is + NumRow layers
-;; (include deflayer/symbols_lafayette_num.kbd)  ;; AltGr prog layer + NumRow layers
+(include deflayer/symbols_lafayette_num.kbd)  ;; AltGr prog layer + NumRow layers
 
 
 ;;-----------------------------------------------------------------------------
 ;; `Navigation` layer: ESDF or HJKL?
 
-(include deflayer/navigation.kbd)  ;; ESDF on the left, NumPad on the right
-;; (include deflayer/navigation_vim.kbd)  ;; HJKL + NumPad on [Space]+[Q]
+;; (include deflayer/navigation.kbd)  ;; ESDF on the left, NumPad on the right
+(include deflayer/navigation_vim.kbd)  ;; HJKL + NumPad on [Space]+[Q]
 
 ;; Replace XX by the keyboard shortcut of your application launcher, if any.
 ;; Mapped on [Space]+[P] in both navigation layers.
@@ -84,11 +84,6 @@
 ;; Extra configuration
 ;; You should not modify this, only if you need to.
 
-(defcfg
-  ;; Enabled makes kanata process keys that are not defined in defsrc
-  ;; Fixes altgr for Windows (see Arsenik issue #22)
-  process-unmapped-keys yes
-  windows-altgr cancel-lctl-press
-)
+(include defcfg_custom.kbd)
 
 ;; vim: set ft=lisp
