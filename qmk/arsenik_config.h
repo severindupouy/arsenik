@@ -1,6 +1,8 @@
 //  ───────────────────< Basic QMK options for Arsenik >───────────────────
 
-#undef PERMISSIVE_HOLD
+#define TAPPING_TERM 200
+
+#define PERMISSIVE_HOLD
 /* QMK’s `PERMISSIVE_HOLD` can be some extra comfort for experienced users, but
  * can also be an absolute pain for beginners, especially if you are trying to
  * learn home-row-mods, which is why we chose to deactivate this option by
@@ -99,7 +101,7 @@
  * and navigation layers to 2 distict layers, and adds an escape key.
  *
  * Base thumb config: LSFT_T(KC_ËSC)  LT(_num_nav, KC_SPC)  RALT_T(KC_ENT)
- * Selenium: LSFT_T(KC_ESC) LT(_num_row, KC_BSPC) LT(_vim_nav, KC_SPC) RALT_T(KC_ENT)
+ * Selenium: LSFT_T(KC_ESC) LT(_nav_layer, KC_BSPC) LT(_vim_nav, KC_SPC) RALT_T(KC_ENT)
  */
 
 // #define SELENIUM_LEFT_HAND_SPACE
