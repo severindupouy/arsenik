@@ -32,10 +32,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_base] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        C(AS(K)),  KC_Q, KC_W,  KC_E,  KC_R,  KC_T,      KC_Y, KC_U,  KC_I,    KC_O,   KC_P,    CW_TOGG,
-        KC_ESC,    KC_A, KC_SS, KC_DD, KC_FF, KC_G,      KC_H, KC_JJ, KC_KK,   KC_LL,  KC_SCLN, KC_ESC,
-        AS(COLN),  KC_Z, KC_X,  KC_C,  KC_V,  KC_B,      KC_N, KC_M,  KC_COMM, KC_DOT, KC_SLSH, AS(COLN),
-              AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,      AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
+        C(KC_K),     KC_Q, KC_W,  KC_E,  KC_R,  KC_T,      KC_Y, KC_U,  KC_I,    KC_O,   KC_P,    CW_TOGG,
+        KC_ESC,      KC_A, KC_SS, KC_DD, KC_FF, KC_G,      KC_H, KC_JJ, KC_KK,   KC_LL,  KC_SCLN, KC_ESC,
+        C(KC_SLSH),  KC_Z, KC_X,  KC_C,  KC_V,  KC_B,      KC_N, KC_M,  KC_COMM, KC_DOT, KC_SLSH, C(KC_SLSH),
+              AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,        AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
     ),
 
     [_lafayette] = ARSENIK_LAYOUT(
