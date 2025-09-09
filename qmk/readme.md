@@ -1,24 +1,15 @@
 # Arsenik QMK
 
-This is a generic implementation of the Arsenik layout for QMK keyboards.
+This repository provides:
 
-**Disclaimer** : This is still relatively new. There might be bugs and your
-keyboard might not be compatible *yet*.
+- `/qmk/keymap`: Generic Arsenik layout files for QMK keyboards
+- `/qmk/generator.sh`: Script to generate and install an Arsenik keymap for your keyboard
 
-## How it works
+## Overview
 
-Arsenik-QMK will define a full qmk keymap in a dummy `ARSENIK_LAYOUT` layout
-definition. At compile time, this dummy gets is replaced by the layout
-definition your keyboard actually uses. This means that the keymap will
-naturally remove unused keys (like the number row on a keyboard with 3 rows)
-or add no-op to the keys unused by Arsenik on bigger keyboards.
+Arsenik-QMK generates a complete QMK keymap using a dummy `ARSENIK_LAYOUT` definition. At compile time, this is replaced with your keyboard's actual layout, automatically adapting to different keyboard sizes and shapes. If your keyboard is not yet supported, you can add its layout to `arsenik.h` or open an issue/PR for help.
 
-Ideally, you install it and it just works, but not every keyboards are
-currently supported. If the `ARSENIK_LAYOUT` isn’t defined for your keyboard,
-it needs to be added at the end of the `arsenik.h` file. PRs are welcome, but
-we will gladly help you if you open an issue ^^
-
-Here is a list of all currently supported QMK layouts :
+**Supported layouts:**
 
 - `LAYOUT_split_3x5_2`
 - `LAYOUT_split_3x5_3`
@@ -30,49 +21,95 @@ Here is a list of all currently supported QMK layouts :
 - `LAYOUT_planck_grid`
 - `LAYOUT_keebio_iris_default`
 
-## Install
+## Quick Start
 
-You’ll need to setup your QMK environment beforhand, QMK’s cli tool does the
-job well. You’ll need to know how is your keyboard is called inside of QMK’s
-code, usually they are named `brand/model/revision` though that may vary from a
-keyboard to another. You can always run `qmk list-keyboard | grep <your
-keyboard>` to quickly find it, is case you don’t know.
+> **Note:** Beginners should follow this guide and use the default Arsenik configuration. Advanced users can customize their setup using Arsenik's features. See step 8 for details.
 
-Once you know how your keyboard is named, installing Arsenik-QMK is as easy as
-cloning this repo locally and running the `./arsenik-qmk.sh <your keyboard>`.
-The script expects to find the QMK repo at `~/qmk_firmware`, so if you already
-have QMK setup somewhere else, you can set the `QMK_PATH` environment variable
-before running the script.
+### 1. Install & Set Up QMK
 
-The script will duplicate the default config for your keyboard, replace the
-keymap by Arsenik’s keymap and install As-QMK’s library and default config.
-Once this is done, the script will open the newly created `config.h` file with
-your `$EDITOR` to let you emmidiatly toggle the different config options you
-can choose from (see "Configuration" section).
+Follow the [QMK Getting Started Guide](https://docs.qmk.fm/newbs_getting_started) to:
 
-Optionnal flags can be passed to `arsenik-qmk.sh` to enable or disable certain
-features:
+- Install the `qmk` CLI
+- Run `qmk setup` (clones the QMK repo)
+- Verify you can compile a default firmware
 
-- `-n`: “no editor” (doesn’t open the `config.h` file)
-- `-b`: “build” (immidiatlly build the keymap after installing it)
-- `-f`: “flash” (immidiatlly build the keymap and flash your keyboard with it
-    after installing it)
+### 2. Identify Your Keyboard and Keymap
 
-### example:
-
-Let’s say I have a Keebio Iris Rev2, and I want to install Arsenik-QMK for it
-(with my QMK folder located in `~/Code/qmk`) then flash the keymap. First, I
-find my real keyboard name:
+Find your keyboard's QMK name (usually `brand/model/revision`).
 
 ```sh
-qmk list-keyboards | grep 'iris'
-# >> ...
-# >> keebio/iris/rev2
-# >> ...
+qmk list-keyboards                # List all supported keyboards
+qmk list-keyboards | grep corne   # Filter for your model
+qmk info -kb <keyboard_model>     # Show keyboard info
+qmk list-keymaps -kb <keyboard_model>  # List available keymaps
 ```
 
-Then I run the script
+### 3. Configure QMK User Defaults
+
+Set your QMK home, keyboard, and keymap:
 
 ```sh
-QMK_PATH="$HOME/Code/qmk" ./arsenik-qmk.sh keebio/iris/rev2 -f
+qmk config user.qmk_home=<path/to/qmk_firmware>
+qmk config user.keyboard=<keyboard_model>
+qmk config user.keymap=<keymap>
+qmk config                        # Check your config
 ```
+
+### 4. Clone the Arsenik Repository
+
+```sh
+git clone https://github.com/OneDeadKey/arsenik.git
+cd arsenik/qmk
+```
+
+Or download: https://github.com/OneDeadKey/arsenik/archive/refs/heads/main.zip
+
+### 5. Generate and Install the Arsenik Keymap
+
+```sh
+./generator.sh --generate --copy
+```
+
+- `--generate`: Creates the Arsenik keymap in `output/<keyboard_model>/keymaps/arsenik`
+- `--copy`: Installs it to your QMK home directory
+
+You can run these steps separately. The script will prompt before overwriting existing files.
+
+### 6. Build the Firmware
+
+```sh
+qmk list-keymaps -kb <keyboard_model>   # Confirm 'arsenik' keymap is present
+qmk compile -kb <keyboard_model> -km arsenik
+```
+
+### 7. Flash Your Keyboard
+
+Connect your keyboard in bootloader/recovery mode:
+
+```sh
+qmk flash -kb <keyboard_model> -km arsenik
+```
+
+### 8. Advanced Configuration (Optional)
+
+Want to go further? You can fully customize your Arsenik keymap and layout:
+
+- Explore QMK firmware options and documentation for advanced features.
+- Review the Arsenik philosophy and available configuration options in the `/qmk/keymap` files and the Arsenik documentation.
+- Edit `config.h` or other keymap files in `/qmk/keymap` to adjust layers, key assignments, or Arsenik-specific settings.
+- After making changes, re-run:
+
+  ```sh
+  ./generator.sh --generate --copy
+  ```
+
+  and re-flash your keyboard as in steps 6 and 7.
+
+This workflow allows you to iterate on your layout and configuration as much as you like.
+
+---
+
+**Need help or want to contribute?**
+
+- Open an issue or PR if your layout is missing or you encounter problems.
+- See the Arsenik documentation for advanced configuration.
