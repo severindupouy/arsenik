@@ -74,8 +74,8 @@
 #else
 #    define AS_TL_TUCK LSFT_T(KC_BSPC)
 #    define AS_TL_HOME LT(_nav_layer, KC_SPC)
-#    define AS_TL_REACH LT(_media_layer, KC_ENT)
-#    define AS_TR_REACH LT(_num_layer, KC_ENT)
+#    define AS_TL_REACH LT(_editor_layer, KC_ENT)
+#    define AS_TR_REACH LT(_editor_layer, KC_ESC)
 #    define AS_TR_HOME LT(_nav_layer, KC_SPC)
 #    define AS_TR_TUCK LAFAYETTE_T(KC_ENT)
 #endif
