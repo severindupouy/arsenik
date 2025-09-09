@@ -1,315 +1,132 @@
-<h1 align="center">Arsenik</h1>
+This repository is a fork of the _marvelous_ [Arsenik](https://github.com/OneDeadKey/arsenik) repository.
 
-<div align="center">
-  ★ <strong>Ergonomics for any keyboard!</strong> ★
-</div>
+Thanks for the ingenious and great work!
 
-<br>
+Take a look at the original repository to find full documentation.
 
-<div align="center">
-  Configure your keyboard — even if it is not programmable — with a
-  beginner-friendly approach to minimize finger movements!
-</div>
+---
 
-<br>
+Here, you can find various configurations I made for my personal use.
 
-![base, navigation and sym layers on a 33-key keyboard](img/all.svg)
+My setup :
 
-*Note: The keyboard layout presented here in the illustration is Qwerty but it
-works with other layouts as well — Azerty, Qwertz, Ergo‑L, Bépo…*
+- a laptop running manjaro with **sway-wm**
+- a **typematrix** keyboard at work (<- kanata)
+- a **piantor** keyboard at home (<- qmk)
+- **ergol** layout
+- **HRM** activated
+- **arsenik** activated
 
---------------------------------------------------------------------------------
+_Note : When I don't have one of my external keyboards plugged in, I still use the ergol layout. However, I keep azerty enabled in case I might need it._
 
-Table of contents
---------------------------------------------------------------------------------
+---
 
-- [Philosophy](#philosophy)
-- [Features](#pick-your-poison)
-  1. [Angle mod](#1-angle-mod)
-  2. [Mod-taps](#2-supercharge-your-thumbs-with-mod-taps)
-  3. [Symbols layer](#3-symbols-layer)
-  4. [Navigation layer](#4-navigation-layer)
-  5. [Keyboard layout](#5-keyboard-layout)
-  6. [Extra customization](#bonus-spice-it-up)
-- [Installation](#installation)
-- [Troubleshooting](#troubleshooting)
-- [Why “Arsenik”?](#why-arsenik)
-- [Join the community](#join-the-community)
+## Table of contents
 
-Philosophy
---------------------------------------------------------------------------------
+- [QMK new arsenik generator script](#updated-qmk-keymap-generator-script)
+- [QMK new arsenik generator documentation](#updated-documentation)
+- [QMK my arsenik ergol+HRM flavor](#arsenik--ergolhrm-flavor)
+  - [<kbd>\_nav_layer</kbd> breaking changes](#_nav_layer-breaking-changes)
+    - replacing `KC_TAB` by `G(S(KC_Q))`
+    - replacing `C(AS(A))` by `KB_TAB`
+    - replacing right hand numbers pad by fn keys
+  - [new <kbd>\_media_layer</kbd>](#new-_media_layer)
+  - [new <kbd>\_mouse_layer</kbd>](#new-_mouse_layer)
+- [KANATA : bépo typematrix on laptop](##kanata--b%C3%A9po-typematrix-on-laptop)
 
-**Bring the keys to your fingers, rather than moving your fingers to the keys.**
+---
 
-Not sure if you should buy that expensive ergonomic keyboard?
+## QMK
 
-Download a ready-to-use Arsenik configuration for [Kanata], and enjoy your
-regular features that were normally only accessible to a programmable
-keyboard.
+### new features
 
-*Note: You probably will benefit the most of Arsenik if you are [touch typing].*
+#### updated qmk keymap generator script
 
-Pick Your Poison!
---------------------------------------------------------------------------------
+I made a complete rewrite of the script to generate the keymap with another logic :
 
-Choose which Arsenik features to use from the following options:
+- the 2 main features can be run separately (cli flags `--generate`, `--copy`)
+- idempotent script (you can run it multiple times)
+- logs
+- remove automatic opening of the editor
+- reorganize folder structure
 
-### 1. Angle mod
+#### updated documentation
 
-On an ISO keyboard, it permutes the extra down-left key to ease the angle on
-your left wrist when typing.
+I made a complete rewrite of the [qmk/readme.md](/qmk/readme.md) to match the new logic (of mine).
 
-![Angle mod](./img/angle_mod.svg)
+I tried to make the explanations as accessible as possible, in order to help beginners (like I was) understand what “arsenik” is used for and how it works.
 
-### 2. Supercharge your thumbs with mod-taps
+### piantor config with tweaks
 
-#### First: layer-taps
+Piantor is a 3x6 split keyboard with 2x3 thumbs clusters. It affords to expand easily the number of layers.
 
-If you’re new to mod-taps, we suggest to start by adding the “layer-tap” option
-where only the thumbs are affected:
+#### arsenik : ergol+HRM flavor
 
-- the left thumb key remains a <kbd>Cmd</kbd> or <kbd>Alt</kbd> key when held,
-but emits a <kbd>Backspace</kbd> when tapped;
-- the right thumb key brings the <kbd>Symbols</kbd> layer when held (in blue)
-— where all programming symbols are arranged for comfort and efficiency — and
-emits <kbd>Return</kbd> when tapped;
-- the spacebar brings the <kbd>Navigation</kbd> layer when held (in orange).
+As I understand and support the motives of the original arsenik choices, specifically to be the more generic as possible, I tried to make some changes to fit my needs. Of course, on that path, I loose some genericity in comparison with the original.
 
-![alt, navigation and sym layers under the thumbs](./img/layer_taps.svg)
+So, here are the major differences from the original arsenik layout.
 
-Having <kbd>Backspace</kbd> and <kbd>Enter</kbd> under the thumbs is enough to
-reduce pinky fatigue very significantly. And using the <kbd>Symbols</kbd>
-and <kbd>Navigation</kbd> layers further reduces hand and finger movements.
+##### <kbd>\_nav_layer</kbd> (breaking changes)
 
-#### Next level: enable the Home Row Mods
+- replacing `KC_TAB` by `G(S(KC_Q))`
 
-When you are familiar with mod-taps, it’s time to enable them on the home row
-with the “HRM” variants:
+> Motivations :
+>
+> - as I found that `Meta+Shift+Q` wasn't so practical on ergol with HRM, I was looking for a **better shortcut to close a window on sway**
+> - In sway, the official shortcut is `Meta+Shift+Q`. I could have chosen to change it in sway configuration, but I prefered to stay with this default.
+> - as many software can be closed with `Ctrl+Q` (not all of them), I makes sense to have `Meta+Shift+Q` on <kbd>\_nav_layer</kbd>, at the same place as <kbd>Q</kbd> in <kbd>\_base_layer</kbd>
 
-- <kbd>FDS</kbd> and <kbd>JKL</kbd> become <kbd>Alt</kbd>, <kbd>Ctrl</kbd>,
-<kbd>Super</kbd> when held long enough;
-- the left thumb key can now emit a <kbd>Shift</kbd> rather than <kbd>Alt</kbd>
-when held.
+- replacing `C(AS(A))` by `KB_TAB`
 
-![home row mods on SDF keys](./img/hrm.svg)
+> Motivations :
+>
+> - as I removed the `KB_TAB` from its place, I had to **find another place**.
+> - **`C(AS(A))` can be completely removed** as you can use `Ctrl+A` directly on <kbd>\_base_layer</kbd> (with ergol+HRM)
+> - Additionnally I found it could make sense to put the **`tab` key on the home row** to match the increasingly intensive use of this key by **AI-related features in IDEs**.
 
-This is a very basic variant of the [Miryoku] principle: one layer on each
-thumb key, and symmetrical modifiers on the home row.
+- on right hand, replace all numbers by fn keys
 
-### 3. Symbols layer
+> Motivations :
+>
+> I experienced not using at all this numbers pad
+> to write numbers, I prefer to use of the <kbd>\_num_layer</kbd>
+> I have a big use of F2 and F5, so I was looking for a good place for them
+> removing all numbers makes a lot of new places, perfect for fn keys
 
-For the <kbd>Symbols</kbd> layer you can keep <kbd>AltGr</kbd> as-is. It is
-useful for keyboard layouts that rely heavily on the <kbd>AltGr</kbd> key.
+##### new <kbd>\_media_layer</kbd>
 
-But the real fun (especially for programmers) happens when we enable the
-“Lafayette” programming layer!
-
-![Lafayette symbols layer on a 33-key keyboard](./img/symbols.svg)
-
-#### Num row >> Num pad
-
-If enabled, in <kbd>Symbols</kbd> mode, pressing the left thumb key brings up
-the <kbd>NumRow</kbd> layer:
-
-- all digits are on the home row, in the order you already know;
-- the upper row helps with <kbd>Shift</kbd>-digit shortcuts;
-- the lower row has dash, comma, dot and slash signs to help with number/date
-inputs
-- <kbd>Space</kbd> becomes a narrow no-break space for layouts that support it.
-
-![NumRow layer on a 33-key keyboard](./img/numrow.svg)
-
-Even on keyboards that *do* have a physical number row, this `NumRow` layer can
-be interesting to use in order to further minimize finger movements.
-
-### 4. Navigation layer
-
-A basic <kbd>Navigation</kbd> layer has an arrow cluster on the left hand to
-move around and a num pad on the right hand.
-
-![navigation layer on a 33-key keyboard](./img/navigation.svg)
-
-#### A superpowered Vim-friendly mod
-
-For those who like to move the cursor with <kbd>HJKL</kbd> in all apps with any
-keyboard layout, it is possible to enable a Vim-like <kbd>Navigation</kbd>
-layer.
-
-It also has:
-
-- super-comfortable <kbd>Tab</kbd> and <kbd>Shift</kbd>-<kbd>Tab</kbd>
-- mouse emulation: previous/next and mouse scroll
-
-![Vim navigation layer on a 33-key keyboard](./img/vim_navigation.svg)
-
-This <kbd>Navigation</kbd> layer has a few empty slots on purpose, so you can
-add your own keys or layers.
-
-<kbd>NumPad</kbd> and <kbd>Fn</kbd> lock these layers: they remain active
-without holding the key until escaped with <kbd>Alt</kbd> or <kbd>AltGr</kbd>.
-
-![NumPad layer on a 33-key keyboard](./img/numpad.svg)
-<p align="center">
-  <em>NumPad layer toggled</em>
-</p>
-
-![Fn layer on a 33-key keyboard](./img/fn.svg)
-<p align="center">
-  <em>Fn layer toggled</em>
-</p>
-
-### 5. Keyboard layout
-
-Choose your keyboard layout among the available ones for Arsenik to work
-properly.
-
-If your layout is not on this list, feel free to open an issue or upvote an
-existing one.
-
-Here are some caveats for specific layouts:
-
-<details>
-<summary>Ergo‑L/Qwerty‑Lafayette/other Lafayette layouts</summary>
-
-Arsenik works out-of-the-box with Lafayette layouts because their
-<kbd>AltGr</kbd> layer already matches Arsenik’s <kbd>Symbols</kbd> layer.
-</details>
-
-<details>
-<summary>Qwerty/Colemak</summary>
-
-Qwerty and Colemak work out-of-the-box with the Lafayette <kbd>Symbols</kbd> layer
-because there are no other characters typed with <kbd>AltGr</kbd>.
-</details>
-
-<details>
-<summary>Azerty</summary>
-
-By using the Lafayette <kbd>Symbols</kbd> layer, you won’t have access to the
-<kbd>€</kbd> sign with <kbd>AltGr</kbd>. You might want to remap it elsewhere, or
-avoid using the Lafayette <kbd>Symbols</kbd> layer.
-</details>
-
-<details>
-<summary>Bépo</summary>
-
-By using the Lafayette <kbd>Symbols</kbd> layer, you won’t have access to the
-characters typed with <kbd>AltGr</kbd>. You might want to remap some of them elsewhere,
-or avoid using the Lafayette <kbd>Symbols</kbd> layer.
-</details>
-
-<details>
-<summary>Optimot</summary>
-
-Do not enable angle mod for Optimot as its driver already implements angle mod.
-
-By using the Lafayette <kbd>Symbols</kbd> layer, you won’t have access to the
-characters typed with <kbd>AltGr</kbd>. You might want to remap some of them elsewhere,
-or avoid using the Lafayette <kbd>Symbols</kbd> layer.
-</details>
-
-### Bonus: Spice It Up
-
-From there, you can edit the configuration to your liking, and even contribute
-to Arsenik!
-
-The 300 ms delay before a key becomes a modifier has been chosen to be easy for
-beginners. Once used to mod-taps, you may want to reduce it so keyboard
-shortcuts can be done more quickly.
-
-In the <kbd>NumRow</kbd> layer, you can edit the <kbd>dk1</kbd> to
-<kbd>dk5</kbd> shortcuts to put whatever seems useful to you: the numerous available
-keys are defined in the [Kanata source code][Kanata keys].
-
-In the <kbd>Navigation</kbd> layer, you can put a command on top of the (Qwerty)
-<kbd>P</kbd> key, e.g. for an application launcher.
-
-Note that Kanata can also use the laptop’s trackpoint buttons (e.g. on a ThinkPad)
-as two additional thumb keys. :-)
-
-Installation
---------------------------------------------------------------------------------
-
-Adjusting to compact keyboard layouts isn’t easy, but Arsenik is designed for
-a step-by-step approach:
-
-- load `kanata.kbd` with Kanata ([installation instructions](kanata));
-- enable each feature by un-commenting the related line (a commented line starts
-with `;;`) – you must enable one and only one line per feature;
-- live-reload the configuration with <kbd>Space</kbd>+<kbd>Backspace</kbd>
-(this requires the layer-taps feature enabled).
-
-If you have a programmable keyboard you might want to take a look at the
-[QMK](qmk) version of Arsenik (work in progress).
-
-Other desktop implementations (KMonad, keyd, Karabiner…) would be nice to see as
-well.
-
-Troubleshooting
---------------------------------------------------------------------------------
-
-Some combinations of three keys might not work on a standard keyboard, due to
-[ghosting], which is a hardware problem that Kanata cannot fix. If you have this
-problem, you have to release a key to be able to press another one.
-
-Why “Arsenik”?
---------------------------------------------------------------------------------
-
-33 keys layout: the 33rd element of the periodic table.
-
-Unlike Miryoku, which requires 6 thumb keys, Arsenik has been designed to work
-with standard ANSI/ISO/laptop keyboards, leveraging the spacebar and the two
-Alt/Cmd keys.
-
-### Inspiration
-
-- [Miryoku] for the main idea of using modifiers on the home row and layer
-shifters under the thumbs
-- [Lafayette] and [Ergo-L] for the <kbd>Symbols</kbd> layer, which has been
-shamelessly taken *as is*
-- [Extend], [Neo], [Shaka34] for the <kbd>Navigation</kbd> layer
-
-### Alternative Symbols Layers
-
-- [Neo]
-- [Seniply]
-- [Pascal Getreuer’s]
-
-### Non-Goals
-
-- Being the most efficient 3×5 layout — [Miryoku] is probably the most
-advanced approach for that, at least on custom 36-key keyboards
-- Suiting every user out-of-the-box — Arsenik is proposed as a reasonable
-default configuration, but users are encouraged to customize it to suit their
-personal needs and preferences
-- Fitting any OS layout — Arsenik works best if your OS layout has either no
-AltGr layer at all (e.g. Qwerty, Colemak, Workman…) or an optimized AltGr layer
-([Lafayette], [Ergo-L]…)
-
-### Similar Projects
-
-- [Miryoku]: 36 keys, 6 layers
-- [Seniply]: 34 keys, 6 layers, no layer-taps (“Callum-style”)
-
-Join the community
---------------------------------------------------------------------------------
-
-French-speaking users may join the [Ergo-L Discord server], which hosts a
-channel to talk about Arsenik, keyboards, layouts and much more.
-
-Feel free to open an issue and/or a pull request if you encounter a bug or want
-to enhance the Arsenik experience!
-
-[Kanata]: https://github.com/jtroo/kanata
-[Miryoku]: https://github.com/manna-harbour/miryoku
-[touch typing]: https://en.wikipedia.org/wiki/Touch_typing
-[ghosting]: https://en.wikipedia.org/wiki/Key_rollover#Ghosting
-[Lafayette]: https://qwerty-lafayette.org/42
-[Ergo-L]: https://ergol.org
-[Kanata keys]: https://github.com/jtroo/kanata/blob/main/parser/src/keys/mod.rs#L159
-[Extend]: https://dreymar.colemak.org/layers-extend.html
-[Neo]: https://neo-layout.org
-[Shaka34]: https://github.com/lobre/shaka34
-[Seniply]: https://stevep99.github.io/seniply/
-[Pascal Getreuer’s]: https://getreuer.info/posts/keyboards/symbol-layer/#my-symbol-layer
-[Ergo-L Discord server]: https://discord.gg/5xR5K3nAFX
+> Motivations :
+>
+> - I wanted to have access to some media keys (PLAY/STOP/BRIGHTNESS, etc.)
+> - I also put there extra **F2 and F5 keys, to have them on left hand**
+
+##### new <kbd>\_mouse_layer</kbd>
+
+> Motivations :
+>
+> I wanted to experiment to control mouse by the keyboard. In fact, I never do it.
+
+#### renaming layers
+
+```
+enum arsenik_layers {
+    _base,
+    _lafayette,
+    _num_layer,   // renamed
+    _vim_layer,   // removed
+    _nav_layer,
+    _fn_layer,    // removed
+    _media_layer, // new
+    _mouse_layer, // new
+};
+```
+
+## KANATA : bépo typematrix on laptop
+
+Some extra configuration to fit my setup :
+
+- narrow kanata activation : only for typematrix, not the laptop keyboard
+- a **tweaked navigation layer** (mirror of the one I use on qmk). See [kanata/deflayer/navigation.kbd](kanata/deflayer/navigation.kbd))
+  - on right hand, full access to fn keys instead of numbers
+  - on left hand, access to mwheel-up functions instead of copy/paste/...
+- a shortcut to close the window on SWAY-WM (re-mapping of `MOD+SHIFT+Q` which is not really easy to do on ergol)
