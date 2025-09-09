@@ -6,9 +6,10 @@ enum arsenik_layers {
     _lafayette,
     _num_row,
     _vim_nav,
-    _num_nav,
+    _nav_pad,
     _num_pad,
     _fun_pad,
+    _media_pad,
 };
 
 enum custom_keycodes {
@@ -32,54 +33,67 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_base] = ARSENIK_LAYOUT(
-        KC_CAPS,        KC_1, KC_2,  KC_3,  KC_4,  KC_5,      KC_6, KC_7,  KC_8,    KC_9,   KC_0,    KC_DEL,
-        QK_LAYER_LOCK,  KC_Q, KC_W,  KC_E,  KC_R,  KC_T,      KC_Y, KC_U,  KC_I,    KC_O,   KC_P,    C(KC_BACKSPACE),
-        KC_ESC,         KC_A, KC_SS, KC_DD, KC_FF, KC_G,      KC_H, KC_JJ, KC_KK,   KC_LL,  KC_SCLN, KC_ESC,
-        KC_CAPS,        KC_Z, KC_X,  KC_C,  KC_V,  KC_B,      KC_N, KC_M,  KC_COMM, KC_DOT, KC_SLSH, CW_TOGG,
-                AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,        AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
+        KC_CAPS,  KC_1, KC_2,  KC_3,  KC_4,  KC_5,      KC_6, KC_7,  KC_8,    KC_9,   KC_0,    KC_DEL,
+
+        C(AS(K)), KC_Q, KC_W,  KC_E,  KC_R,  KC_T,      KC_Y, KC_U,  KC_I,    KC_O,   KC_P,    C(AS(K)),
+        KC_ESC,   KC_A, KC_SS, KC_DD, KC_FF, KC_G,      KC_H, KC_JJ, KC_KK,   KC_LL,  KC_SCLN, KC_ESC,
+        KC_F2,    KC_Z, KC_X,  KC_C,  KC_V,  KC_B,      KC_N, KC_M,  KC_COMM, KC_DOT, KC_SLSH, KC_F5,
+            AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,      AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
     ),
 
     [_lafayette] = ARSENIK_LAYOUT(
-        __,  AG(KC_1), AG(KC_2), AG(KC_3), AG(KC_4), AG(KC_5),      AG(KC_6), AG(KC_7), AG(KC_8), AG(KC_9), AG(KC_0), __,
-        __,  AS(CIRC), AS(LABK), AS(RABK), AS(DLR),  AS(PERC),      AS(AT),   AS(AMPR), AS(ASTR), AS(QUOT), AS(GRV),  __,
-        __,  AS(LCBR), AS(LPRN), AS(RPRN), AS(RCBR), AS(EQL),       AS(BSLS), AS(PLUS), AS(MINS), AS(SLSH), AS(DQUO), __,
-        __,  AS(TILD), AS(LBRC), AS(RBRC), AS(UNDS), AS(HASH),      AS(PIPE), AS(EXLM), AS(SCLN), AS(COLN), AS(QUES), __,
-                                MO(_num_row),   KC_SPC,   XX,       XX,   KC_SPC,   MO(_num_row)
+        __,       AG(KC_1), AG(KC_2), AG(KC_3), AG(KC_4), AG(KC_5),      AG(KC_6), AG(KC_7), AG(KC_8), AG(KC_9), AG(KC_0), __,
+
+        __,       AS(CIRC), AS(LABK), AS(RABK), AS(DLR),  AS(PERC),      AS(AT),   AS(AMPR), AS(ASTR), AS(QUOT), AS(GRV),  __,
+        __,       AS(LCBR), AS(LPRN), AS(RPRN), AS(RCBR), AS(EQL),       AS(BSLS), AS(PLUS), AS(MINS), AS(SLSH), AS(DQUO), __,
+        KC_CAPS,  AS(TILD), AS(LBRC), AS(RBRC), AS(UNDS), AS(HASH),      AS(PIPE), AS(EXLM), AS(SCLN), AS(COLN), AS(QUES), __,
+                                    MO(_num_row),   KC_SPC,   XX,        XX,   KC_SPC,   MO(_num_row)
     ),
 
     // Not fully implemented yet
     [_num_row] = ARSENIK_LAYOUT(
         __,  __,    __,    __,    __,    __,         __,    __,       __,       __,      __,       __,
-        __,  AS_S1, AS_S2, AS_S3, AS_S4, AS_S5,      AS_S6, AS_S7,    AS_S8,    AS_S9,   AS_S0,    __,
-        __,  AS(1), AS(2), AS(3), AS(4), AS(5),      AS(6), AS(7),    AS(8),    AS(9),   AS(0),    __,
-        __,  ODK_1, ODK_2, ODK_3, ODK_4, ODK_5,      XX,    AS(MINS), AS(COMM), AS(DOT), AS(SLSH), __,
-                    LAFAYETTE,   KC_SPC,   __,      __,   KC_SPC,   LAFAYETTE
+
+        KC_BSPC,  AS_S1, AS_S2, AS_S3, AS_S4, AS_S5,      AS_S6, AS_S7,    AS_S8,    AS_S9,   AS_S0,    KC_BSPC,
+        __,       AS(1), AS(2), AS(3), AS(4), AS(5),      AS(6), AS(7),    AS(8),    AS(9),   AS(0),    __,
+        __,       ODK_1, ODK_2, ODK_3, ODK_4, ODK_5,      XX,    AS(MINS), AS(COMM), AS(DOT), AS(SLSH), __,
+                                __,   KC_SPC,   __,      __,   KC_SPC,   LAFAYETTE
     ),
 
     [_vim_nav] = ARSENIK_LAYOUT(
         __, G(KC_1),      G(KC_2),  G(KC_3),   G(KC_4),  G(KC_5), G(KC_6),  G(KC_7),  G(KC_8), G(KC_9), G(KC_0),      __,
-        __, MO(_num_nav), C(AS(T)), KC_WBAK,   KC_WFWD,  XX,      KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  G(AS(P)),     __,
+
+        __, MO(_nav_pad), C(AS(T)), KC_WBAK,   KC_WFWD,  XX,      KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  G(AS(P)),     __,
         __, C(AS(A)),     C(AS(S)), S(KC_TAB), KC_TAB,   XX,      KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, MO(_fun_pad), __,
         __, C(AS(Z)),     C(AS(X)), C(AS(C)),  C(AS(V)), XX,      KC_WH_L,  KC_WH_D,  KC_WH_U, KC_WH_R, XX,           __,
                                          KC_DEL,   __,   XX,      XX,   __,   KC_ESC
     ),
 
-    [_num_nav] = ARSENIK_LAYOUT(
+    [_nav_pad] = ARSENIK_LAYOUT(
         __,          G(KC_1),  G(KC_2), G(KC_3), G(KC_4),  G(KC_5),      G(KC_6),     G(KC_7),         G(KC_8),           G(KC_9), G(KC_0), __,
-        __,          KC_TAB,   KC_HOME, KC_UP,   KC_END,   KC_PGUP,      XX,          KC_MPLY,         G(AS(D)),          XX,      XX,      __,
-        G(S(KC_Q)),  C(AS(A)), KC_LEFT, KC_DOWN, KC_RGHT,  KC_PGDN,      XX,          KC_ESC,          G(AS(P)),          XX,      XX,      G(S(KC_Q)),
-        __,          KC_UNDO,  KC_CUT,  KC_COPY, KC_PASTE, S(KC_TAB),    KC_KB_MUTE,  KC_KB_VOLUME_UP, KC_KB_VOLUME_DOWN, XX,      XX,      __,
-                                        KC_DEL,   __,   MO(_fun_pad),    MO(_fun_pad),   __,   KC_ESC
+
+        __,          KC_TAB,   KC_HOME, KC_UP,   KC_END,   KC_PGUP,      XX,  KC_F1,  KC_F2,   KC_F3,   KC_F4,  __,
+        G(S(KC_Q)),  C(AS(A)), KC_LEFT, KC_DOWN, KC_RGHT,  KC_PGDN,      XX,  KC_F5,  KC_F6,   KC_F7,   KC_F8,  G(S(KC_Q)),
+        __,          KC_WH_L,  KC_WH_D, KC_WH_U, KC_WH_R,  S(KC_TAB),    XX,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  __,
+                                        KC_DEL,   __,   __,              __,   __,   KC_ESC
     ),
 
     [_fun_pad] = ARSENIK_LAYOUT(
-        __,  __,     __,      __,      __,      __,      __,  __,       __,       __,       __,  __,
-        __,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   XX,      XX,  XX,       XX,       XX,       XX,  __,
-        __,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   XX,      XX,  KC_LCTL,  KC_LALT,  KC_LGUI,  __,  KC_PRINT_SCREEN,
-        __,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  XX,      XX,  XX,       XX,       XX,       XX,  __,
-                        LAFAYETTE,   KC_SPC,   __,       __,   KC_SPC,   LAFAYETTE
+        __, __,    __,     __,     __,     __,      __, __,      __,      __,      __, __,
+        __, KC_F1, KC_F2,  KC_F3,  KC_F4,  XX,      XX, XX,      XX,      XX,      XX, __,
+        __, KC_F5, KC_F6,  KC_F7,  KC_F8,  XX,      XX, KC_LCTL, KC_LALT, KC_LGUI, __, __,
+        __, KC_F9, KC_F10, KC_F11, KC_F12, XX,      XX, XX,      XX,      XX,      XX, __,
+                    LAFAYETTE,   KC_SPC,   XX,      XX,   KC_SPC,   LAFAYETTE
     ),
 
+    [_media_pad] = ARSENIK_LAYOUT(
+        __,  __,     __,      __,      __,      __,      __,  __,       __,       __,       __,  __,
+
+        __,  XX,      KC_MEDIA_REWIND,      XX,                   KC_MEDIA_FAST_FORWARD,  KC_KB_VOLUME_UP,      XX, XX, XX, XX, KC_PRINT_SCREEN, __,
+        __,  XX,      KC_MEDIA_PREV_TRACK,  KC_MEDIA_PLAY_PAUSE,  KC_MEDIA_NEXT_TRACK,    KC_KB_VOLUME_DOWN,    XX, XX, XX, XX, XX, __,
+        __,  KC_UNDO, KC_CUT,               KC_COPY,              KC_PASTE,               KC_KB_MUTE,           XX, XX, XX, XX, XX, __,
+                                                                                LAFAYETTE,   KC_SPC,   __,      __,   KC_SPC,   LAFAYETTE
+    ),
 };
 
 
