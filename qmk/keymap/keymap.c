@@ -5,9 +5,7 @@ enum arsenik_layers {
     _base,
     _lafayette,
     _num_layer,
-    _vim_layer,
     _nav_layer,
-    _fn_layer,
     _media_layer,
     _mouse_layer,
 };
@@ -48,7 +46,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         MO(_num_layer),   KC_SPC,   __,        __,   KC_SPC,   MO(_num_layer)
     ),
 
-    // Not fully implemented yet
     [_num_layer] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
         KC_BSPC,       AS_S1, AS_S2, AS_S3, AS_S4, AS_S5,      AS_S6,   AS_S7,    AS_S8,    AS_S9,    AS_S0,    KC_BSPC,
@@ -79,25 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __,             MS_BTN5,  MS_LEFT,  MS_DOWN,  MS_RGHT,  MS_BTN6,    XX, XX, XX, XX, XX, __,
         QK_LAYER_LOCK,  MS_BTN7,  XX,       XX,       XX,       MS_BTN8,    XX, XX, XX, XX, XX, __,
                                                 __,  __,  __,          __,  __,  __
-    ),
-
-    // unused
-    [_vim_layer] = ARSENIK_LAYOUT(
-        __, __, __, __, __, __, __, __, __, __, __, __,
-        __, MO(_nav_layer), C(AS(T)), KC_WBAK,   KC_WFWD,  XX,      KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  G(AS(P)),     __,
-        __, C(AS(A)),       C(AS(S)), S(KC_TAB), KC_TAB,   XX,      KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, MO(_fn_layer), __,
-        __, C(AS(Z)),       C(AS(X)), C(AS(C)),  C(AS(V)), XX,      KC_WH_L,  KC_WH_D,  KC_WH_U, KC_WH_R, XX,           __,
-                                            KC_DEL,   __,   XX,     XX,   __,   KC_ESC
-    ),
-
-    // unused
-    [_fn_layer] = ARSENIK_LAYOUT(
-        __, __, __, __, __, __, __, __, __, __, __, __,
-        __,            KC_F1, KC_F2,  KC_F3,  KC_F4,  XX,      XX, XX,      XX,      XX,      XX, __,
-        __,            KC_F5, KC_F6,  KC_F7,  KC_F8,  XX,      XX, KC_LCTL, KC_LALT, KC_LGUI, __, __,
-        QK_LAYER_LOCK, KC_F9, KC_F10, KC_F11, KC_F12, XX,      XX, XX,      XX,      XX,      XX, __,
-                    LAFAYETTE,   KC_SPC,   XX,      XX,   KC_SPC,   LAFAYETTE
-    ),
+    )
 };
 
 // This is where you’ll write most of your custom code for your keyborad.
