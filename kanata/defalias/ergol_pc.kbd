@@ -10,6 +10,7 @@
   cut C-x
   cpy C-w
   pst C-v
+  clw M-S-q ;; sway close window
 
   0 0
   1 1
