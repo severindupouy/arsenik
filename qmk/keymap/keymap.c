@@ -8,6 +8,7 @@ enum arsenik_layers {
     _nav_layer,
     _media_layer,
     _mouse_layer,
+    _editor_layer,
 };
 
 enum custom_keycodes {
@@ -32,51 +33,59 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_base] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        C(AS(K)),  KC_Q, KC_W,  KC_E,  KC_R,  KC_T,      KC_Y, KC_U,  KC_I,    KC_O,   KC_P,    CW_TOGG,
-        KC_ESC,    KC_A, KC_SS, KC_DD, KC_FF, KC_G,      KC_H, KC_JJ, KC_KK,   KC_LL,  KC_SCLN, KC_ESC,
-        AS(COLN),  KC_Z, KC_X,  KC_C,  KC_V,  KC_B,      KC_N, KC_M,  KC_COMM, KC_DOT, KC_SLSH, AS(COLN),
-              AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,      AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
+        C(AS(K)),     KC_Q, KC_W,  KC_E,  KC_R,  KC_T,      KC_Y, KC_U,  KC_I,    KC_O,   KC_P,    KC_MEDIA_PLAY_PAUSE,
+        KC_ESC,       KC_A, KC_SS, KC_DD, KC_FF, KC_G,      KC_H, KC_JJ, KC_KK,   KC_LL,  KC_SCLN, KC_KB_VOLUME_UP,
+        C(AS(SLSH)),  KC_Z, KC_X,  KC_C,  KC_V,  KC_B,      KC_N, KC_M,  KC_COMM, KC_DOT, KC_SLSH, KC_KB_VOLUME_DOWN,
+              AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,        AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
     ),
 
     [_lafayette] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        __,             AS(CIRC), AS(LABK), AS(RABK), AS(DLR),  AS(PERC),      AS(AT),   AS(AMPR), AS(ASTR), AS(QUOT), AS(GRV),  KC_CAPS,
-        __,             AS(LCBR), AS(LPRN), AS(RPRN), AS(RCBR), AS(EQL),       AS(BSLS), AS(PLUS), AS(MINS), AS(SLSH), AS(DQUO), __,
+        __,             AS(CIRC), AS(LABK), AS(RABK), AS(DLR),  AS(PERC),      AS(AT),   AS(AMPR), AS(ASTR), AS(QUOT), AS(GRV),  CW_TOGG,
+        __,             AS(LCBR), AS(LPRN), AS(RPRN), AS(RCBR), AS(EQL),       AS(BSLS), AS(PLUS), AS(MINS), AS(SLSH), AS(DQUO), KC_CAPS,
         QK_LAYER_LOCK,  AS(TILD), AS(LBRC), AS(RBRC), AS(UNDS), AS(HASH),      AS(PIPE), AS(EXLM), AS(SCLN), AS(COLN), AS(QUES), __,
                                         MO(_num_layer),   KC_SPC,   __,        __,   KC_SPC,   MO(_num_layer)
     ),
 
     [_num_layer] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        KC_BSPC,       AS_S1, AS_S2, AS_S3, AS_S4, AS_S5,      AS_S6,   AS_S7,    AS_S8,    AS_S9,    AS_S0,    KC_BSPC,
-        __,            AS(1), AS(2), AS(3), AS(4), AS(5),      AS(6),   AS(7),    AS(8),    AS(9),    AS(0),    __,
-        QK_LAYER_LOCK, ODK_1, ODK_2, ODK_3, ODK_4, AS(COMM),   AS(DOT), AS(MINS), AS(PLUS), AS(ASTR), AS(SLSH), __,
-                                    __,   KC_SPC,   __,        __,   KC_SPC,   LAFAYETTE
+        __,             AS_S1,  AS_S2,  AS_S3,  AS_S4,    AS_S5,           AS_S6,    AS_S7,     AS_S8,     AS_S9,     AS_S0,     __,
+        __,             AS(1),  AS(2),  AS(3),  AS(4),    AS(5),           AS(6),    AS(7),     AS(8),     AS(9),     AS(0),     __,
+        QK_LAYER_LOCK,  __,     __,     __,     AS(UNDS), AS(COMM),        AS(DOT),  AS(MINS),  AS(PLUS),  AS(ASTR),  AS(SLSH),  __,
+                                              __,   KC_SPC,   __,          __,   KC_SPC,   LAFAYETTE
     ),
 
     [_nav_layer] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        __,             G(S(KC_Q)),   KC_HOME, KC_UP,   KC_END,   KC_PGUP,      XX,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   __,
-        __,             KC_TAB,       KC_LEFT, KC_DOWN, KC_RGHT,  KC_PGDN,      XX,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   __,
-        QK_LAYER_LOCK,  KC_WH_L,      KC_WH_D, KC_WH_U, KC_WH_R,  S(KC_TAB),    XX,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  __,
-                                        KC_DEL,   __,   __,                     __,   __,   KC_ESC
+        TG(_mouse_layer),  KC_TAB,    KC_HOME,  KC_UP,    KC_END,    KC_PGUP,          XX,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   __,
+        __,                C(AS(A)),  KC_LEFT,  KC_DOWN,  KC_RGHT,   KC_PGDN,          XX,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   __,
+        QK_LAYER_LOCK,     KC_UNDO,   KC_CUT,   KC_COPY,  KC_PASTE,  G(S(KC_Q)),       XX,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  __,
+                              KC_DEL,  MO(_mouse_layer),  MO(_editor_layer),           MO(_editor_layer),  MO(_mouse_layer),  KC_ESC
+    ),
+
+    [_editor_layer] = ARSENIK_LAYOUT(
+        __, __, __, __, __, __, __, __, __, __, __, __,
+        KC_SLEP,       XX, KC_WWW_HOME, KC_F2,     KC_WWW_SEARCH,  KC_WWW_REFRESH,      XX, KC_BRIGHTNESS_UP,   KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK, KC_PRINT_SCREEN, KC_SYRQ,
+        KC_WAKE,       XX, KC_WWW_BACK, C(AS(D)),  KC_WWW_FORWARD, KC_FIND,             XX, KC_BRIGHTNESS_DOWN, S(KC_LEFT),          S(KC_RGHT),          XX,              __,
+        QK_LAYER_LOCK, XX, XX,          KC_SELECT, KC_INSERT,      KC_WWW_STOP,         XX, XX,                 XX,                  XX,                  XX,              __,
+                                                       LAFAYETTE,  KC_SPC,   __,        __,   KC_SPC,   LAFAYETTE
     ),
 
     [_media_layer] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        TG(_mouse_layer),  S(KC_LEFT),  S(KC_RGHT),  KC_F2,    KC_KB_MUTE,  KC_MEDIA_PLAY_PAUSE,      XX, KC_BRIGHTNESS_DOWN,  KC_BRIGHTNESS_UP,    XX, KC_PRINT_SCREEN, __,
-        __,                KC_WBAK,     KC_WFWD,     AS(COLN), KC_F5,       KC_KB_VOLUME_UP,          XX, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK, XX, XX,              __,
-        QK_LAYER_LOCK,     KC_UNDO,     KC_CUT,      KC_COPY,  KC_PASTE,    KC_KB_VOLUME_DOWN,        XX, XX,                  XX,                  XX, XX,              __,
-                                                    LAFAYETTE,  KC_SPC,   __,                          __,   KC_SPC,   LAFAYETTE
+        __,             KC_BRIGHTNESS_UP,    XX,  XX,  KC_MEDIA_PREV_TRACK,  KC_MEDIA_NEXT_TRACK,     XX, XX,  XX,  XX, KC_PRINT_SCREEN, KC_SYRQ,
+        __,             KC_BRIGHTNESS_DOWN,  XX,  XX,  S(KC_LEFT),           S(KC_RGHT),              XX, XX,  XX,  XX, XX,              __,
+        QK_LAYER_LOCK,  XX,                  XX,  XX,  S(KC_LEFT),           S(KC_RGHT),              XX, XX,  XX,  XX, XX,              __,
+                                                            LAFAYETTE,  KC_SPC,   __,                 __,   KC_SPC,   LAFAYETTE
     ),
 
     [_mouse_layer] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
         __,             MS_BTN3,  MS_BTN1,  MS_UP,    MS_BTN2,  MS_BTN4,    XX, XX, XX, XX, XX, __,
         __,             MS_BTN5,  MS_LEFT,  MS_DOWN,  MS_RGHT,  MS_BTN6,    XX, XX, XX, XX, XX, __,
-        QK_LAYER_LOCK,  MS_BTN7,  XX,       XX,       XX,       MS_BTN8,    XX, XX, XX, XX, XX, __,
+        QK_LAYER_LOCK,  KC_WH_L,  KC_WH_U,  KC_WH_D,  KC_WH_R,  XX,         XX, XX, XX, XX, XX, __,
                                                 __,  __,  __,          __,  __,  __
-    )
+    ),
 };
 
 // This is where you’ll write most of your custom code for your keyborad.
