@@ -77,7 +77,7 @@ fi
 
 # Set QMK_HOME if not already set
 if [ -z "${QMK_HOME+x}" ]; then
-    QMK_HOME=$(qmk config user.qmk_home | awk -F= '{print $2}' | xargs)
+    QMK_HOME=$(qmk config user.qmk_home | awk -F= '{print $2}' | xargs | envsubst)
 fi
 
 # Find the keymaps folder for a given keyboard name
