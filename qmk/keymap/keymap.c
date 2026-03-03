@@ -57,23 +57,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_nav_layer] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        TG(_mouse_layer),  KC_TAB,    KC_HOME,  KC_UP,    KC_END,    KC_PGUP,          XX,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   __,
-        __,                C(AS(A)),  KC_LEFT,  KC_DOWN,  KC_RGHT,   KC_PGDN,          XX,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   __,
-        QK_LAYER_LOCK,     KC_UNDO,   KC_CUT,   KC_COPY,  KC_PASTE,  G(S(KC_Q)),       XX,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  __,
+        TG(_mouse_layer),  KC_TAB,    KC_HOME,  KC_UP,    KC_END,    KC_PGUP,          KC_BRIGHTNESS_UP,    KC_F1,  KC_F2,   KC_F3,   KC_F4,   __,
+        __,                C(AS(A)),  KC_LEFT,  KC_DOWN,  KC_RGHT,   KC_PGDN,          KC_BRIGHTNESS_DOWN,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   __,
+        QK_LAYER_LOCK,     KC_UNDO,   KC_CUT,   KC_COPY,  KC_PASTE,  G(S(KC_Q)),       XX,                  KC_F9,  KC_F10,  KC_F11,  KC_F12,  __,
                               KC_DEL,  MO(_mouse_layer),  MO(_editor_layer),           MO(_editor_layer),  MO(_mouse_layer),  KC_ESC
     ),
 
     [_editor_layer] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        KC_SLEP,       XX, KC_WWW_HOME, KC_F2,     KC_WWW_SEARCH,  KC_WWW_REFRESH,      XX, KC_BRIGHTNESS_UP,   KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK, KC_PRINT_SCREEN, KC_SYRQ,
-        KC_WAKE,       XX, KC_WWW_BACK, C(AS(D)),  KC_WWW_FORWARD, KC_FIND,             XX, KC_BRIGHTNESS_DOWN, S(KC_LEFT),          S(KC_RGHT),          XX,              __,
-        QK_LAYER_LOCK, XX, XX,          KC_SELECT, KC_INSERT,      KC_WWW_STOP,         XX, XX,                 XX,                  XX,                  XX,              __,
-                                                       LAFAYETTE,  KC_SPC,   __,        __,   KC_SPC,   LAFAYETTE
+        KC_SLEP,       KC_MENU,   XX,          KC_F2,     KC_WWW_SEARCH,  KC_WWW_REFRESH,      XX,  XX,                  XX,  XX,                  XX,  __,
+        KC_WAKE,       KC_SELECT, KC_WWW_BACK, C(AS(D)),  KC_WWW_FORWARD, KC_FIND,             XX,  KC_MEDIA_PREV_TRACK, XX,  KC_MEDIA_NEXT_TRACK, XX,  __,
+        QK_LAYER_LOCK, XX,        S(KC_LEFT),  XX,        S(KC_RGHT),     XX,                  XX,  XX,                  XX,  KC_PRINT_SCREEN,     XX,  __,
+                                                                    __,  KC_SPC,   __,         __,   KC_SPC,   __
     ),
 
     [_media_layer] = ARSENIK_LAYOUT(
         __, __, __, __, __, __, __, __, __, __, __, __,
-        __,             KC_BRIGHTNESS_UP,    XX,  XX,  KC_MEDIA_PREV_TRACK,  KC_MEDIA_NEXT_TRACK,     XX, XX,  XX,  XX, KC_PRINT_SCREEN, KC_SYRQ,
+        __,             KC_BRIGHTNESS_UP,    XX,  XX,  KC_MEDIA_PREV_TRACK,  KC_MEDIA_NEXT_TRACK,     XX, XX,  XX,  XX, KC_PRINT_SCREEN, __,
         __,             KC_BRIGHTNESS_DOWN,  XX,  XX,  S(KC_LEFT),           S(KC_RGHT),              XX, XX,  XX,  XX, XX,              __,
         QK_LAYER_LOCK,  XX,                  XX,  XX,  S(KC_LEFT),           S(KC_RGHT),              XX, XX,  XX,  XX, XX,              __,
                                                             LAFAYETTE,  KC_SPC,   __,                 __,   KC_SPC,   LAFAYETTE
