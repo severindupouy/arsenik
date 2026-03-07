@@ -20,6 +20,7 @@ enum arsenik_layers {
     _num_nav,
     _num_row,
     _function,
+    _mouse_layer,
 };
 
 enum custom_keycodes {
@@ -46,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,   KC_Q, KC_W,  KC_E,  KC_R,  KC_T,      KC_Y, KC_U,  KC_I,    KC_O,   KC_P,    KC_BSPC,
         KC_ESC,   KC_A, KC_SS, KC_DD, KC_FF, KC_G,      KC_H, KC_JJ, KC_KK,   KC_LL,  KC_SCLN, KC_ENT,
         KC_LSFT,  KC_Z, KC_X,  KC_C,  KC_V,  KC_B,      KC_N, KC_M,  KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
-              OSM(MOD_LSFT),  LT(_num_nav, KC_BSPC),  LT(_function, KC_TAB),
+              OSM(MOD_LSFT),  LT(_num_nav, KC_BSPC),  LT(_function, KC_ENT),
               LT(_function, KC_ENT),  LT(_num_nav, KC_SPC),  OSL(_symbols)
     ),
 
@@ -66,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __,  AS(CIRC), AS(LABK), AS(RABK), AS(DLR),  AS(PERC),     AS(AT),   AS(AMPR), AS(ASTR), AS(QUOT), AS(GRV),  __,
         __,  AS(LCBR), AS(LPRN), AS(RPRN), AS(RCBR), AS(EQL),      AS(BSLS), AS(PLUS), AS(MINS), AS(SLSH), AS(DQUO), __,
         __,  AS(TILD), AS(LBRC), AS(RBRC), AS(UNDS), AS(HASH),     AS(PIPE), AS(EXLM), AS(SCLN), AS(COLN), AS(QUES), __,
-              MO(_num_nav),  KC_SPC,  KC_ENT,
+              MO(_num_row),  KC_SPC,  KC_ENT,
               __,  KC_RALT,  __
     ),
 
@@ -86,8 +87,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __,  KC_ESC,  KC_HOME, KC_UP,   KC_END,   KC_PGUP,      TO(_num_lock), AS(7),   AS(8),   AS(9),   AS(SLSH), __,
         __,  SC_ALL,   KC_LEFT, KC_DOWN, KC_RGHT,  KC_PGDN,      AS(MINS),      AS(4),   AS(5),   AS(6),   AS(0),    __,
         __,  SC_UNDO,  SC_CUT,   SC_COPY,  SC_PASTE,  SC_REDO,       AS(COMM),      AS(1),   AS(2),   AS(3),   AS(DOT),  __,
-              KC_CAPS,  LT(_function, KC_DEL),  S(KC_TAB),
-              KC_ESC,  LT(_function, KC_SPC),  KC_RALT
+              KC_CAPS,  LT(_mouse_layer, KC_DEL),  S(KC_TAB),
+              KC_ESC,  LT(_mouse_layer, KC_SPC),  KC_RALT
     ),
 
     // 5. NumRow layer -- numbers on homerow (not accessible by default)
@@ -108,6 +109,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __,  KC_F9,  KC_F10, KC_F11, KC_F12, XX,       XX,  KC_MNXT,         KC_VOLD,         KC_BRID,  KC_INS,  __,
               __,  __,  QK_BOOT,
               QK_RBT,  __,  __
+    ),  
+    
+    [_mouse_layer] = ARSENIK_LAYOUT(
+        __, __, __, __, __, __, __, __, __, __, __, __,
+        __,             MS_BTN3,  MS_BTN1,  MS_UP,    MS_BTN2,  MS_BTN4,    XX, XX, XX, XX, XX, __,
+        __,             MS_BTN5,  MS_LEFT,  MS_DOWN,  MS_RGHT,  MS_BTN6,    XX, XX, XX, XX, XX, __,
+        QK_LAYER_LOCK,  KC_WH_L,  KC_WH_U,  KC_WH_D,  KC_WH_R,  XX,         XX, XX, XX, XX, XX, __,
+            __,  __,  __,
+            __,  __,  __
     ),
 };
 
