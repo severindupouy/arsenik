@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "arsenik.h"
+#include "customization.h"
 
 enum arsenik_layers {
     _base,
