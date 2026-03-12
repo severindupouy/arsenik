@@ -3,7 +3,7 @@
 
 enum arsenik_layers {
     _base,
-    _lafayette,
+    _symbols,
     _num_row,
     _vim_nav,
     _num_nav,
@@ -27,8 +27,8 @@ enum custom_keycodes {
 // A comprehensive list of QMK keycodes is available here: https://docs.qmk.fm/keycodes
 // However, we used a many aliases to automatically adapt the keymap depending on the options you
 // enabled in the `config.h` file (or just to have some syntaxic sugar). You can find all of them
-// in the `arsenik.h` file. Feel free to remove those aliases and replace them with their actual
-// value if you need something Arsenik doesn’t provide.
+// in the `customization.h` file. Feel free to remove those aliases and replace them with their
+// actual value if you need something Arsenik doesn’t provide.
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_base] = ARSENIK_LAYOUT(
@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          AS_TL_TUCK,   AS_TL_HOME,   AS_TL_REACH,      AS_TR_REACH,   AS_TR_HOME,   AS_TR_TUCK
     ),
 
-    [_lafayette] = ARSENIK_LAYOUT(
+    [_symbols] = ARSENIK_LAYOUT(
         __, AG(KC_1), AG(KC_2), AG(KC_3), AG(KC_4), AG(KC_5),      AG(KC_6), AG(KC_7), AG(KC_8), AG(KC_9), AG(KC_0), __,
         __, AS(CIRC), AS(LABK), AS(RABK), AS(DLR),  AS(PERC),      AS(AT),   AS(AMPR), AS(ASTR), AS(QUOT), AS(GRV),  __,
         __, AS(LCBR), AS(LPRN), AS(RPRN), AS(RCBR), AS(EQL),       AS(BSLS), AS(PLUS), AS(MINS), AS(SLSH), AS(DQUO), __,
