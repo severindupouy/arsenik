@@ -20,7 +20,6 @@
 #    define AS(stripped_keycode) FR_##stripped_keycode
 #    define SHIFTED_NUMBERS
 #    include "keymap_french.h"
-#    include "sendstring_french.h"
 #elif defined ARSENIK_HOST_LAYOUT_ERGOL
 #    define AS(stripped_keycode) EL_##stripped_keycode
 #    include "keymap_ergol.h"
@@ -33,19 +32,15 @@
 #    define AS(stripped_keycode) BE_##stripped_keycode
 #    define SHIFTED_NUMBERS
 #    include "keymap_bepo.h"
-#    include "sendstring_bepo.h"
 #elif defined ARSENIK_HOST_LAYOUT_DVORAK
 #    define AS(stripped_keycode) DV_##stripped_keycode
 #    include "keymap_dvorak.h"
-#    include "sendstring_dvorak.h"
 #elif defined ARSENIK_HOST_LAYOUT_COLEMAK
 #    define AS(stripped_keycode) CM_##stripped_keycode
 #    include "keymap_colemak.h"
-#    include "sendstring_colemak.h"
 #elif defined ARSENIK_HOST_LAYOUT_WORKMAN
 #    define AS(stripped_keycode) WK_##stripped_keycode
 #    include "keymap_workman.h"
-#    include "sendstring_workman.h"
 #else
 #    error "No `ARSENIK_HOST_LAYOUT_*` option was found or recognised"
 #endif
