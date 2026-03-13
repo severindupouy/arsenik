@@ -29,7 +29,7 @@
 #    define ODK4_SEQUENCE tap_code(EL_ODK); tap_code(KC_4)
 #    define ODK5_SEQUENCE tap_code(EL_ODK); tap_code(KC_5)
 #elif defined ARSENIK_HOST_LAYOUT_BEPO
-#    define AS(stripped_keycode) BE_##stripped_keycode
+#    define AS(stripped_keycode) BP_##stripped_keycode
 #    define SHIFTED_NUMBERS
 #    include "keymap_bepo.h"
 #elif defined ARSENIK_HOST_LAYOUT_DVORAK

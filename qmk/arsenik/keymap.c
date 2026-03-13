@@ -60,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __, G(KC_1),      G(KC_2),  G(KC_3),   G(KC_4),  G(KC_5), G(KC_6),  G(KC_7),  G(KC_8), G(KC_9), G(KC_0),      __,
         __, MO(_num_nav), C(AS(T)), KC_WBAK,   KC_WFWD,  XX,      KC_HOME,  KC_PGDN,  KC_PGUP, KC_END,  G(AS(P)),     __,
         __, C(AS(A)),     C(AS(S)), S(KC_TAB), KC_TAB,   XX,      KC_LEFT,  KC_DOWN,  KC_UP,   KC_RGHT, MO(_fun_pad), __,
-        __, C(AS(Z)),     C(AS(X)), C(AS(C)),  C(AS(V)), XX,      KC_WH_L,  KC_WH_D,  KC_WH_U, KC_WH_R, XX,           __,
+        __, C(AS(Z)),     C(AS(X)), C(AS(C)),  C(AS(V)), XX,      MS_WHLL,  MS_WHLD,  MS_WHLU, MS_WHLR, XX,           __,
                                          KC_DEL,   __,   XX,      XX,   __,   KC_ESC
     ),
 
