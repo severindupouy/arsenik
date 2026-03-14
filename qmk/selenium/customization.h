@@ -76,7 +76,7 @@
 #if defined HT_TWO_THUMB_KEYS
 #define SYM_NUM_LAYER LT(_num_nav, KC_CAPS)
 #else
-#define SYM_NUM_LAYER OSL(_num_nav)
+#define SYM_NUM_LAYER OSL(_num_row)
 #endif
 
 // Thumb key definitions
