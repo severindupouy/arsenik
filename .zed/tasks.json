@@ -1,0 +1,20 @@
+[
+  {
+    "label": "Keymap lint: check",
+    "command": "python3 qmk/tools/keymap_lint.py check $ZED_FILE",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false
+  },
+  {
+    "label": "Keymap lint: fix",
+    "command": "python3 qmk/tools/keymap_lint.py fix $ZED_FILE",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false
+  },
+  {
+    "label": "Keymap lint: fix (wide)",
+    "command": "python3 qmk/tools/keymap_lint.py fix $ZED_FILE --wide",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false
+  }
+]
