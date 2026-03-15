@@ -12,11 +12,11 @@ enum arsenik_layers {
 };
 
 enum custom_keycodes {
-    ODK_1 = SAFE_RANGE,  // „
-    ODK_2,  // “
-    ODK_3,  // ”
-    ODK_4,  // ¢
-    ODK_5,  // ‰
+    ODK_1 = SAFE_RANGE, // „
+    ODK_2,              // “
+    ODK_3,              // ”
+    ODK_4,              // ¢
+    ODK_5,              // ‰
 };
 
 // The ONEDEADKEY_LAYOUT macro allows us to declare a config for a 4x6+3 keyboard, then truncate it
@@ -29,6 +29,7 @@ enum custom_keycodes {
 // enabled in the `config.h` file (or just to have some syntaxic sugar). You can find all of them
 // in the `customization.h` file. Feel free to remove those aliases and replace them with their
 // actual value if you need something Arsenik doesn’t provide.
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_base] = ONEDEADKEY_LAYOUT(
@@ -81,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 };
-
+// clang-format on
 
 // This is where you’ll write most of your custom code for your keyborad.
 // This callback is called right before the keycode is sent to the OS.
@@ -89,30 +90,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // returning false cancels any furnther processing.
 // for instance, calling `tap_code(KC_B)` if KC_A is pressed but true is
 // returned, "ba" is sent, but if `false` is returned, it’s just "b"
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-#   ifdef SELENIUM_RESTORE_SPACE
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef SELENIUM_RESTORE_SPACE
     static bool thumb_mod_same_hand_as_space_held = false;
-    if ((keycode & 0xff) == KC_SPC && record->tap.count == 0)
-        thumb_mod_same_hand_as_space_held = record->event.pressed;
-#   endif
+    if ((keycode & 0xff) == KC_SPC && record->tap.count == 0) thumb_mod_same_hand_as_space_held = record->event.pressed;
+#endif
 
     // Let QMK do its thing on key releases.
     if (!record->event.pressed) return true;
 
-#   ifdef SELENIUM_RESTORE_SPACE
-    if ((keycode & 0xff) == KC_BSPC &&
-        !thumb_mod_same_hand_as_space_held &&
-        record->tap.count > 0
-    ) {
+#ifdef SELENIUM_RESTORE_SPACE
+    if ((keycode & 0xff) == KC_BSPC && !thumb_mod_same_hand_as_space_held && record->tap.count > 0) {
         tap_code(KC_SPC);
         return false;
     }
-#   endif
+#endif
 
     switch (keycode) {
-        // ----------------------------------------
-        // Code for your custom keycodes goes here.
-        // ----------------------------------------
+            // ----------------------------------------
+            // Code for your custom keycodes goes here.
+            // ----------------------------------------
 
         case ODK_1: ODK1_SEQUENCE; return false;
         case ODK_2: ODK2_SEQUENCE; return false;
