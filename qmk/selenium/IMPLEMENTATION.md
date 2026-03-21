@@ -10,23 +10,23 @@ QMK and ZMK don't offer the same features. This document explains how the conver
 
 ZMK assigns timing and flavor to each behavior definition independently:
 
-| Behavior | Flavor | `tapping-term-ms` | `quick-tap-ms` | Used by |
-| -------- | -------------- | ------------------ | --------------- | ------- |
-| `&hrm`   | tap-preferred  | 300ms (`TAPPING_TERM`) | 200ms (`QUICK_TAP`) | HRM keys (S/D/F/J/K/L), function layer media HRMs |
-| `&sc`    | hold-preferred | 150ms (`SHORT_TAPPING_TERM`) | 200ms (`QUICK_TAP`) | Thumb keys that don't produce text (Enter, Escape, Del, layer taps) |
-| `&lt`    | tap-preferred  | 300ms (`TAPPING_TERM`) | 200ms (`QUICK_TAP`) | Space thumb, NavNum/NumLock layer+space |
-| `&mt`    | hold-preferred | 150ms (`SHORT_TAPPING_TERM`) | 200ms (`QUICK_TAP`) | LCTL+Backspace thumb (HT_THUMB_TAPS) |
-| `bsl` / `bsk` / `lbsk` | tap-preferred | 300ms (`TAPPING_TERM`) | — | EZ_SL, EZ_SK, EZ_LSK wrappers |
+| Behavior               | Flavor         | `tapping-term-ms`            | `quick-tap-ms`      | Used by                                                             |
+| ---------------------- | -------------- | ---------------------------- | ------------------- | ------------------------------------------------------------------- |
+| `&hrm`                 | tap-preferred  | 300ms (`TAPPING_TERM`)       | 200ms (`QUICK_TAP`) | HRM keys (S/D/F/J/K/L), function layer media HRMs                   |
+| `&sc`                  | hold-preferred | 150ms (`SHORT_TAPPING_TERM`) | 200ms (`QUICK_TAP`) | Thumb keys that don't produce text (Enter, Escape, Del, layer taps) |
+| `&lt`                  | tap-preferred  | 300ms (`TAPPING_TERM`)       | 200ms (`QUICK_TAP`) | Space thumb, NavNum/NumLock layer+space                             |
+| `&mt`                  | hold-preferred | 150ms (`SHORT_TAPPING_TERM`) | 200ms (`QUICK_TAP`) | LCTL+Backspace thumb (HT_THUMB_TAPS)                                |
+| `bsl` / `bsk` / `lbsk` | tap-preferred  | 300ms (`TAPPING_TERM`)       | —                   | EZ_SL, EZ_SK, EZ_LSK wrappers                                       |
 
 ### QMK model: single global + per-key callbacks
 
 QMK has one global `TAPPING_TERM` plus per-key callback functions:
 
-| Setting | Value | How |
-| ------- | ----- | --- |
-| `TAPPING_TERM` | 150ms | Global default (set in `config.h` as `SHORT_TAPPING_TERM`) |
-| `ARSENIK_HRM_TAPPING_TERM` | 300ms | Returned by `get_tapping_term()` for tap-preferred keys |
-| `QUICK_TAP` | 200ms | Returned by `get_quick_tap_term()` for all keys |
+| Setting                    | Value | How                                                        |
+| -------------------------- | ----- | ---------------------------------------------------------- |
+| `TAPPING_TERM`             | 150ms | Global default (set in `config.h` as `SHORT_TAPPING_TERM`) |
+| `ARSENIK_HRM_TAPPING_TERM` | 300ms | Returned by `get_tapping_term()` for tap-preferred keys    |
+| `QUICK_TAP`                | 200ms | Returned by `get_quick_tap_term()` for all keys            |
 
 The split is driven by `tap_keycode_is_tap_preferred()`, which returns `true` for keycodes that should use ZMK's `&hrm`/`&lt` behavior:
 
@@ -44,12 +44,12 @@ The result:
 - `TAPPING_TERM_PER_KEY` is enabled, and `get_tapping_term()` returns `ARSENIK_HRM_TAPPING_TERM` (300ms) for text-producing keys and `TAPPING_TERM` (150ms) for everything else.
 - For `QUICK_TAP`: QMK's `action_tapping.h` unconditionally redefines `QUICK_TAP_TERM = TAPPING_TERM` unless `QUICK_TAP_TERM_PER_KEY` is defined. We define `QUICK_TAP_TERM_PER_KEY` and provide `get_quick_tap_term()` returning 200ms.
 
-| ZMK | QMK | Match |
-| --- | --- | ----- |
-| `&hrm` 300ms tap-preferred | `*_T()` on letter → 300ms, tap-preferred | Exact |
-| `&lt` 300ms tap-preferred | `LT()` on Space → 300ms, tap-preferred | Exact |
+| ZMK                        | QMK                                                                | Match                   |
+| -------------------------- | ------------------------------------------------------------------ | ----------------------- |
+| `&hrm` 300ms tap-preferred | `*_T()` on letter → 300ms, tap-preferred                           | Exact                   |
+| `&lt` 300ms tap-preferred  | `LT()` on Space → 300ms, tap-preferred                             | Exact                   |
 | `&sc` 150ms hold-preferred | `LT()` on Enter/Escape/Del → 150ms, `hold_on_other_key_press=true` | Approximate (see below) |
-| `&mt` 150ms hold-preferred | `*_T()` on Backspace → 150ms, `hold_on_other_key_press=true` | Approximate (see below) |
+| `&mt` 150ms hold-preferred | `*_T()` on Backspace → 150ms, `hold_on_other_key_press=true`       | Approximate (see below) |
 
 ## Hold-tap behavior
 
@@ -64,7 +64,7 @@ ZMK's hold-preferred flavor: if the key is still held when `tapping-term-ms` exp
 
 QMK's `hold_on_other_key_press=true`: if **any other key is pressed** while this key is held, immediately trigger hold — regardless of the tapping term. If no other key is pressed, the tapping term still applies normally.
 
-The QMK version triggers hold *faster* (on any key down) while ZMK waits for the timing threshold.
+The QMK version triggers hold _faster_ (on any key down) while ZMK waits for the timing threshold.
 
 #### Explored option: exact ZMK hold-preferred in QMK
 
@@ -84,16 +84,16 @@ Not implemented. With a 150ms tapping term on non-text keys, the difference is n
 
 Some ZMK behaviors have no direct QMK counterpart. These were approximated:
 
-| ZMK behavior                                   | QMK approximation       | What's lost                                                                                                                                                                |
-| ---------------------------------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `EZ_SK(LSHIFT)` (sticky key hold-tap)          | `OSM(MOD_LSFT)`         | — (equivalent: QMK's `OSM()` is one-shot on tap and continuous modifier on hold) |
-| `sym_shift_altgr` (shift→AltGr morph)          | `OSL(_symbols)`         | Shift morph: tapping shift doesn't switch to AltGr                                                                                                                         |
-| `EZ_SL` (hold=momentary, tap=one-shot layer)   | `OSL()`                 | — (equivalent: QMK's `OSL()` is one-shot on tap and momentary on hold)                                                                                                     |
-| `EZ_LSK(RALT)` (sticky key on base layer)      | `LSK_RALT` custom keycode | — (equivalent: see [EZ_LSK(RALT)](#ez_lskralt-sticky-altgr-on-base-layer) below)                                                                                          |
-| `magic_backspace` / `magic_space` (mod-morphs) | Not implemented         | See [Mod-morph decision](#mod-morph-magic_backspacemagic_space) below                                                                                                      |
-| `&lt FUNCTION LS(SPACE)`                       | Not implemented          | See [Insecable space](#insecable-space) below. |
-| `&sl { ignore-modifiers; }`                    | Default QMK behavior     | — (equivalent: QMK's OSL natively preserves modifiers when chaining OSM→OSL)                                                                                               |
-| `&sk { quick-release; }`                       | Similar QMK default      | Minor timing difference: QMK releases OSM on next key release, ZMK quick-release on next key press. Negligible in practice. |
+| ZMK behavior                                   | QMK approximation         | What's lost                                                                                                                 |
+| ---------------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `EZ_SK(LSHIFT)` (sticky key hold-tap)          | `OSM(MOD_LSFT)`           | — (equivalent: QMK's `OSM()` is one-shot on tap and continuous modifier on hold)                                            |
+| `sym_shift_altgr` (shift→AltGr morph)          | `BSL_SYM`                 | Shift morph: tapping shift doesn't switch to AltGr                                                                          |
+| `EZ_SL` (hold=momentary, tap=one-shot layer)   | `BSL_SYM` custom keycode  | — (equivalent: see [BSL_SYM](#bsl_sym-better-sticky-layer-for-symbols) below)                                               |
+| `EZ_LSK(RALT)` (sticky key on base layer)      | `LSK_RALT` custom keycode | — (equivalent: see [EZ_LSK(RALT)](#ez_lskralt-sticky-altgr-on-base-layer) below)                                            |
+| `magic_backspace` / `magic_space` (mod-morphs) | Not implemented           | See [Mod-morph decision](#mod-morph-magic_backspacemagic_space) below                                                       |
+| `&lt FUNCTION LS(SPACE)`                       | Not implemented           | See [Insecable space](#insecable-space) below.                                                                              |
+| `&sl { ignore-modifiers; }`                    | Default QMK behavior      | — (equivalent: QMK's OSL natively preserves modifiers when chaining OSM→OSL)                                                |
+| `&sk { quick-release; }`                       | Similar QMK default       | Minor timing difference: QMK releases OSM on next key release, ZMK quick-release on next key press. Negligible in practice. |
 
 ## Mod-morph (magic_backspace/magic_space)
 
@@ -132,13 +132,14 @@ Both approaches affect all instances of the keycode, not just the secondary thum
 ## sym_shift_altgr (Shift→AltGr morph)
 
 In ZMK, `sym_shift_altgr` is a nested mod-morph used as the right tuck thumb key (HT_THUMB_TAPS and HT_HOME_ROW_MODS variants):
+
 - Default: `EZ_SL(SYMBOLS_LAYER)` — one-shot/momentary symbols layer
 - When Shift is held: `EZ_SK(RALT)` — one-shot/hold AltGr (for typing accented characters via Ergol's AltGr layer)
 - When Ctrl/GUI/Alt is held: passes through to the symbols layer
 
 The purpose: on Ergol, this lets you tap Shift (left tuck) then tap the symbol key (right tuck) to get AltGr instead of the symbol layer, giving access to accented characters.
 
-This feature is **not implemented** in the QMK version. The right tuck thumb uses `OSL(_symbols)` unconditionally.
+This feature is **not implemented** in the QMK version. The right tuck thumb uses `BSL_SYM` unconditionally.
 
 ### Why not implement it
 
@@ -155,6 +156,22 @@ In ZMK, the right thumb home key on the NumLock and NumNav layers uses `&lt LAYE
 This feature is **not implemented** in the QMK version.
 
 QMK's `LT()` only accepts basic keycodes, so `LT(layer, S(KC_SPC))` is not possible. An initial approach intercepted taps in `process_record_user` by checking if the keycode matched `LT(_num_nav, KC_SPC)` or `LT(_function, KC_SPC)`. However, the base layer space key also uses `LT(_num_nav, KC_SPC)` — making it impossible to distinguish a base layer space tap from a NumLock/NumNav layer space tap. This caused every space on the base layer to send Shift+Space (non-breaking space), breaking normal typing.
+
+## BSL_SYM (better sticky layer for symbols)
+
+In ZMK, `EZ_SL(SYMBOLS_LAYER)` expands to `bsl`, a hold-tap with completely separate code paths:
+
+- **Hold** (`&mo`): pure momentary layer activation
+- **Tap** (`&osl`): one-shot layer activation
+
+QMK's `OSL()` handles both modes in a single internal state machine. While this works for simple cases, the state machine breaks when `OSL()` is nested with other layer-changing keys (e.g. pressing `SYM_NUM_LAYER` = `OSL(_num_nav)` while holding `OSL(_symbols)`). The first OSL's state gets corrupted, leaving `_symbols` permanently active until manually toggled off.
+
+In QMK, this is implemented via a custom keycode `BSL_SYM` with explicit `layer_on()`/`layer_off()` for the hold path:
+
+- On press: `layer_on(_symbols)`
+- On release: `layer_off(_symbols)`, and if no other key was pressed during the hold, `set_oneshot_layer(_symbols, ONESHOT_START)` for one-shot behavior
+
+A static flag (`bsl_sym_used`) tracks whether another key was pressed while BSL_SYM was held, distinguishing tap from hold. This avoids QMK's OSL state machine entirely for the hold case, preventing the nesting corruption.
 
 ## EZ_LSK(RALT) (sticky AltGr on base layer)
 
