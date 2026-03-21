@@ -20,6 +20,7 @@ enum arsenik_layers {
     _num_nav,
     _num_row,
     _function,
+    _mouse_layer,
 };
 
 enum custom_keycodes {
@@ -29,6 +30,7 @@ enum custom_keycodes {
     ODK_4,              // ¢
     ODK_5,              // ‰
     LSK_RALT,           // EZ_LSK(RALT): go to base layer, then sticky RALT
+    BSL_SYM,            // EZ_SL(SYMBOLS): hold=momentary, tap=one-shot _symbols
 };
 
 // Converted from the Selenium ZMK keymap (zmk-keyboard-quacken).
@@ -39,12 +41,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // 0. Base layer
     [_base] = ONEDEADKEY_LAYOUT(
-        __,       __,     __,     __,     __,     __,          __,    __,     __,       __,      __,       __,
-        KC_TAB,   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,        KC_Y,  KC_U,   KC_I,     KC_O,    KC_P,     KC_BSPC,
-        KC_ESC,   KC_AA,  KC_SS,  KC_DD,  KC_FF,  KC_G,        KC_H,  KC_JJ,  KC_KK,    KC_LL,   KC_SCSC,  KC_ENT,
-        KC_LSFT,  KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,        KC_N,  KC_M,   KC_COMM,  KC_DOT,  KC_SLSH,  KC_RSFT,
+        __,          __,     __,     __,     __,     __,          __,    __,     __,       __,      __,       __,
+        AS_TR_TUCK,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,        KC_Y,  KC_U,   KC_I,     KC_O,    KC_P,     KC_MPLY,
+        KC_ESC,      KC_AA,  KC_SS,  KC_DD,  KC_FF,  KC_G,        KC_H,  KC_JJ,  KC_KK,    KC_LL,   KC_SCSC,  KC_VOLU,
+        KC_LSFT,     KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,        KC_N,  KC_M,   KC_COMM,  KC_DOT,  KC_SLSH,  KC_VOLD,
 
-                 AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,        AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
+                    AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,        AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
     ),
 
     // 1. NumLock layer -- sticky NumNav that stays on until deactivated
@@ -54,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __,  AS(EQL),  KC_LEFT,   KC_DOWN,   KC_RGHT,   KC_PGDN,         AS(MINS),   AS(4),  AS(5),  AS(6),  AS(0),     __,
         __,  AS(DLR),  AS(COLN),  AS(ASTR),  AS(PLUS),  AS(PERC),        AS(COMM),   AS(1),  AS(2),  AS(3),  AS(DOT),   __,
 
-                             __,  LT(_num_nav, KC_BSPC),  KC_TAB,        __,  LT(_num_nav, KC_SPC),  OSL(_symbols)
+                             __,  LT(_num_nav, KC_BSPC),  KC_TAB,        __,  LT(_num_nav, KC_SPC),  BSL_SYM
     ),
 
     // 2. Symbols layer -- programming symbols (AltGr layer for Ergol)
@@ -84,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __,  SC_ALL,   KC_LEFT,  KC_DOWN,  KC_RGHT,   KC_PGDN,        AS(MINS),       AS(4),  AS(5),  AS(6),  AS(0),     __,
         __,  SC_UNDO,  SC_CUT,   SC_COPY,  SC_PASTE,  SC_REDO,        AS(COMM),       AS(1),  AS(2),  AS(3),  AS(DOT),   __,
 
-                  KC_CAPS,  LT(_function, KC_DEL),  S(KC_TAB),        KC_ESC,  LT(_function, KC_SPC),  LSK_RALT
+                  KC_CAPS,  LT(_function, KC_DEL),  S(KC_TAB),        KC_ESC,  LT(_mouse_layer, KC_SPC),  LSK_RALT
     ),
 
     // 5. NumRow layer -- numbers on homerow (not accessible by default)
@@ -99,12 +101,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // 6. Function layer -- F1..12 + media controls + modifiers on right homerow
     [_function] = ONEDEADKEY_LAYOUT(
-        __,  __,     __,      __,      __,      __,        __,  __,               __,               __,       __,               __,
-        __,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   XX,        XX,  KC_MPRV,          KC_VOLU,          KC_BRIU,  KC_SCRL,          __,
-        __,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   XX,        XX,  LALT_T(KC_MPLY),  RCTL_T(KC_MUTE),  KC_RGUI,  LSFT_T(KC_PSCR),  __,
-        __,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  XX,        XX,  KC_MNXT,          KC_VOLD,          KC_BRID,  KC_INS,           __,
+        __,  __,     __,      __,      __,      __,                __,           __,               __,               __,       __,               __,
+        __,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   XX,                XX,           KC_MPRV,          KC_VOLU,          KC_BRIU,  KC_SCRL,          __,
+        __,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   C(AS(D)),          S(KC_LEFT),   LALT_T(KC_MPLY),  RCTL_T(KC_MUTE),  KC_RGUI,  LSFT_T(KC_PSCR),  __,
+        __,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  G(S(KC_Q)),        S(KC_RIGHT),  KC_MNXT,          KC_VOLD,          KC_BRID,  KC_INS,           __,
 
-                                 __,  __,  QK_BOOT,        QK_RBT,  __,  __
+                                         __,  __,  QK_BOOT,        QK_RBT,  __,  __
+    ),
+
+    // 7. Mouse layer -- mouse buttons on homerow, scroll wheel on numrow
+    [_mouse_layer] = ONEDEADKEY_LAYOUT(
+        __,             __,       __,       __,       __,       __,             __,  __,  __,  __,  __,  __,
+        __,             MS_BTN3,  MS_BTN1,  MS_UP,    MS_BTN2,  MS_BTN4,        XX,  XX,  XX,  XX,  XX,  __,
+        __,             MS_BTN5,  MS_LEFT,  MS_DOWN,  MS_RGHT,  MS_BTN6,        XX,  XX,  XX,  XX,  XX,  __,
+        QK_LAYER_LOCK,  MS_WHLL,  MS_WHLU,  MS_WHLD,  MS_WHLR,  XX,             XX,  XX,  XX,  XX,  XX,  __,
+
+                                                           __,  __,  __,        __,  __,  __
     ),
 };
 // clang-format on
@@ -114,10 +126,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 static bool lsk_ralt_held = false;
 static bool lsk_ralt_used = false;
 
+// BSL_SYM state: replaces OSL(_symbols) with explicit hold=momentary, tap=one-shot.
+// QMK's OSL() uses a single state machine for both modes, which breaks when nested
+// with other layer-changing keys (e.g. OSL inside OSL). This custom keycode uses
+// layer_on/layer_off for hold and manual one-shot tracking for tap.
+// QMK's set_oneshot_layer() doesn't work reliably when called from process_record_user
+// (the one-shot is never consumed), so we track the one-shot state ourselves.
+static bool bsl_sym_held = false;
+static bool bsl_sym_used = false;
+static bool bsl_sym_oneshot = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // Track whether another key was pressed while LSK_RALT is held,
-    // to distinguish tap (one-shot) from hold (continuous modifier).
-    if (lsk_ralt_held && keycode != LSK_RALT && record->event.pressed) { lsk_ralt_used = true; }
+    if (record->event.pressed) {
+        // Track whether another key was pressed while custom hold-tap keys are held
+        if (lsk_ralt_held && keycode != LSK_RALT) { lsk_ralt_used = true; }
+        if (bsl_sym_held && keycode != BSL_SYM) { bsl_sym_used = true; }
+
+        // Consume BSL_SYM one-shot: the keycode was already resolved from _symbols
+        // at matrix scan time, so turning off the layer here is safe.
+        if (bsl_sym_oneshot && keycode != BSL_SYM) {
+            bsl_sym_oneshot = false;
+            layer_off(_symbols);
+        }
+    }
 
     // NOTE: Insecable space (Shift+Space for Ergol) is NOT implemented.
     // The base layer space uses LT(_num_nav, KC_SPC), which shares the same
@@ -137,6 +168,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 lsk_ralt_held = true;
                 lsk_ralt_used = false;
                 return false;
+            case BSL_SYM:
+                if (bsl_sym_oneshot) {
+                    // Tap-to-cancel: one-shot is pending, clear it
+                    bsl_sym_oneshot = false;
+                    layer_off(_symbols);
+                    return false;
+                }
+                layer_on(_symbols);
+                bsl_sym_held = true;
+                bsl_sym_used = false;
+                return false;
         }
     } else {
         switch (keycode) {
@@ -144,6 +186,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_mods(MOD_BIT(KC_RALT));
                 if (!lsk_ralt_used) { set_oneshot_mods(MOD_BIT(KC_RALT)); }
                 lsk_ralt_held = false;
+                return false;
+            case BSL_SYM:
+                if (!bsl_sym_held) { return false; }
+                layer_off(_symbols);
+                if (!bsl_sym_used) {
+                    // Tap: activate one-shot (keep layer on, consume on next keypress)
+                    bsl_sym_oneshot = true;
+                    layer_on(_symbols);
+                }
+                bsl_sym_held = false;
                 return false;
         }
     }
