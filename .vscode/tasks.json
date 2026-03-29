@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Keymap lint: check",
+      "type": "shell",
+      "command": "python3 qmk/tools/keymap_lint.py check ${file}",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always" }
+    },
+    {
+      "label": "Keymap lint: fix",
+      "type": "shell",
+      "command": "python3 qmk/tools/keymap_lint.py fix ${file}",
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent" }
+    },
+    {
+      "label": "Keymap lint: fix (wide)",
+      "type": "shell",
+      "command": "python3 qmk/tools/keymap_lint.py fix ${file} --wide",
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent" }
+    }
+  ]
+}

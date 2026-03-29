@@ -35,7 +35,7 @@
  */
 
 
-#define ARSENIK_PLACEHOLDER_LAYOUT
+#define ONEDEADKEY_PLACEHOLDER_LAYOUT
 /* NOTE: This line gets automatically filled in by the install script, but the
  * underlying layout may not yet exist, and keyboard specific layout may have
  * other variants you might want to check out.
