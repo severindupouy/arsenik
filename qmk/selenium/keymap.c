@@ -20,7 +20,6 @@ enum arsenik_layers {
     _num_nav,
     _num_row,
     _function,
-    _mouse_layer,
 };
 
 enum custom_keycodes {
@@ -41,22 +40,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // 0. Base layer
     [_base] = ONEDEADKEY_LAYOUT(
-        __,          __,     __,     __,     __,     __,          __,    __,     __,       __,      __,       __,
-        AS_TR_TUCK,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,        KC_Y,  KC_U,   KC_I,     KC_O,    KC_P,     KC_MPLY,
-        KC_ESC,      KC_AA,  KC_SS,  KC_DD,  KC_FF,  KC_G,        KC_H,  KC_JJ,  KC_KK,    KC_LL,   KC_SCSC,  KC_VOLU,
-        KC_LSFT,     KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,        KC_N,  KC_M,   KC_COMM,  KC_DOT,  KC_SLSH,  KC_VOLD,
+        __,       __,     __,     __,     __,     __,          __,    __,     __,       __,      __,       __,
+        KC_TAB,   KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,        KC_Y,  KC_U,   KC_I,     KC_O,    KC_P,     KC_BSPC,
+        KC_ESC,   KC_AA,  KC_SS,  KC_DD,  KC_FF,  KC_G,        KC_H,  KC_JJ,  KC_KK,    KC_LL,   KC_SCSC,  KC_ENT,
+        KC_LSFT,  KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,        KC_N,  KC_M,   KC_COMM,  KC_DOT,  KC_SLSH,  KC_RSFT,
 
-                    AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,        AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
+                 AS_TL_TUCK,  AS_TL_HOME,  AS_TL_REACH,        AS_TR_REACH,  AS_TR_HOME,  AS_TR_TUCK
     ),
 
     // 1. NumLock layer -- sticky NumNav that stays on until deactivated
     [_num_lock] = ONEDEADKEY_LAYOUT(
-        __,  __,       __,        __,        __,        __,              __,         __,     __,     __,     __,        __,
-        __,  KC_ESC,   KC_HOME,   KC_UP,     KC_END,    KC_PGUP,         TO(_base),  AS(7),  AS(8),  AS(9),  AS(SLSH),  __,
-        __,  AS(EQL),  KC_LEFT,   KC_DOWN,   KC_RGHT,   KC_PGDN,         AS(MINS),   AS(4),  AS(5),  AS(6),  AS(0),     __,
-        __,  AS(DLR),  AS(COLN),  AS(ASTR),  AS(PLUS),  AS(PERC),        AS(COMM),   AS(1),  AS(2),  AS(3),  AS(DOT),   __,
+        __,  __,        __,        __,        __,        __,              __,         __,     __,     __,     __,        __,
+        __,  KC_ESC,    KC_HOME,   KC_UP,     KC_END,    KC_PGUP,         TO(_base),  AS(7),  AS(8),  AS(9),  AS(SLSH),  __,
+        __,  AS(EQL),   KC_LEFT,   KC_DOWN,   KC_RGHT,   KC_PGDN,         AS(MINS),   AS(4),  AS(5),  AS(6),  AS(0),     __,
+        __,  AS_MONEY,  AS(COLN),  AS(ASTR),  AS(PLUS),  AS(PERC),        AS(COMM),   AS(1),  AS(2),  AS(3),  AS(DOT),   __,
 
-                             __,  LT(_num_nav, KC_BSPC),  KC_TAB,        __,  LT(_num_nav, KC_SPC),  BSL_SYM
+                              __,  LT(_num_nav, KC_BSPC),  KC_TAB,        __,  LT(_num_nav, KC_SPC),  BSL_SYM
     ),
 
     // 2. Symbols layer -- programming symbols (AltGr layer for Ergol)
@@ -86,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __,  SC_ALL,   KC_LEFT,  KC_DOWN,  KC_RGHT,   KC_PGDN,        AS(MINS),       AS(4),  AS(5),  AS(6),  AS(0),     __,
         __,  SC_UNDO,  SC_CUT,   SC_COPY,  SC_PASTE,  SC_REDO,        AS(COMM),       AS(1),  AS(2),  AS(3),  AS(DOT),   __,
 
-                  KC_CAPS,  LT(_function, KC_DEL),  S(KC_TAB),        KC_ESC,  LT(_mouse_layer, KC_SPC),  LSK_RALT
+                  KC_CAPS,  LT(_function, KC_DEL),  S(KC_TAB),        KC_ESC,  LT(_function, KC_SPC),  LSK_RALT
     ),
 
     // 5. NumRow layer -- numbers on homerow (not accessible by default)
@@ -101,22 +100,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     // 6. Function layer -- F1..12 + media controls + modifiers on right homerow
     [_function] = ONEDEADKEY_LAYOUT(
-        __,  __,     __,      __,      __,      __,                __,           __,               __,               __,       __,               __,
-        __,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   XX,                XX,           KC_MPRV,          KC_VOLU,          KC_BRIU,  KC_SCRL,          __,
-        __,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   C(AS(D)),          S(KC_LEFT),   LALT_T(KC_MPLY),  RCTL_T(KC_MUTE),  KC_RGUI,  LSFT_T(KC_PSCR),  __,
-        __,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  G(S(KC_Q)),        S(KC_RIGHT),  KC_MNXT,          KC_VOLD,          KC_BRID,  KC_INS,           __,
+        __,  __,     __,      __,      __,      __,        __,  __,               __,               __,       __,               __,
+        __,  KC_F1,  KC_F2,   KC_F3,   KC_F4,   XX,        XX,  KC_MPRV,          KC_VOLU,          KC_BRIU,  KC_SCRL,          __,
+        __,  KC_F5,  KC_F6,   KC_F7,   KC_F8,   XX,        XX,  LALT_T(KC_MPLY),  RCTL_T(KC_MUTE),  KC_RGUI,  LSFT_T(KC_PSCR),  __,
+        __,  KC_F9,  KC_F10,  KC_F11,  KC_F12,  XX,        XX,  KC_MNXT,          KC_VOLD,          KC_BRID,  KC_INS,           __,
 
-                                         __,  __,  QK_BOOT,        QK_RBT,  __,  __
-    ),
-
-    // 7. Mouse layer -- mouse buttons on homerow, scroll wheel on numrow
-    [_mouse_layer] = ONEDEADKEY_LAYOUT(
-        __,             __,       __,       __,       __,       __,             __,  __,  __,  __,  __,  __,
-        __,             MS_BTN3,  MS_BTN1,  MS_UP,    MS_BTN2,  MS_BTN4,        XX,  XX,  XX,  XX,  XX,  __,
-        __,             MS_BTN5,  MS_LEFT,  MS_DOWN,  MS_RGHT,  MS_BTN6,        XX,  XX,  XX,  XX,  XX,  __,
-        QK_LAYER_LOCK,  MS_WHLL,  MS_WHLU,  MS_WHLD,  MS_WHLR,  XX,             XX,  XX,  XX,  XX,  XX,  __,
-
-                                                           __,  __,  __,        __,  __,  __
+                                 __,  __,  QK_BOOT,        QK_RBT,  __,  __
     ),
 };
 // clang-format on
@@ -233,7 +222,7 @@ static inline bool tap_keycode_is_tap_preferred(uint16_t keycode) {
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    return tap_keycode_is_tap_preferred(keycode) ? ARSENIK_HRM_TAPPING_TERM : TAPPING_TERM;
+    return tap_keycode_is_tap_preferred(keycode) ? HRM_TAPPING_TERM : TAPPING_TERM;
 }
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {

@@ -1,7 +1,6 @@
 // Selenium keymap for QMK — converted from the ZMK Selenium keymap
 // https://github.com/OneDeadKey/selenium
 
-
 /******************************************************************************
  * Layout-specific actions and symbols.
  ******************************************************************************/
@@ -15,7 +14,6 @@
 // Uncomment the following line if using a Mac:
 
 // #define MACOS
-
 
 /******************************************************************************
  * Hold-Taps
@@ -74,7 +72,6 @@
 
 // #define LEFT_HAND_SPACE
 
-
 /******************************************************************************
  * QMK-specific settings
  ******************************************************************************/
@@ -84,7 +81,6 @@
  * underlying layout may not yet exist, and keyboard specific layout may have
  * other variants you might want to check out.
  */
-
 
 //  ── Mapping to QMK/Arsenik internals (usually no need to change below) ──
 
@@ -108,7 +104,6 @@
 #ifndef HRM_TAPPING_TERM
 #    define HRM_TAPPING_TERM 300
 #endif
-#define ARSENIK_HRM_TAPPING_TERM HRM_TAPPING_TERM
 
 #ifndef SHORT_TAPPING_TERM
 #    define SHORT_TAPPING_TERM 150
