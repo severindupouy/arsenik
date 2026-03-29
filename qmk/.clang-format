@@ -13,4 +13,5 @@ AlignConsecutiveMacros: Consecutive
 AlignAfterOpenBracket: Align
 PointerAlignment: Right
 SpaceBeforeParens: ControlStatements
+IndentPPDirectives: AfterHash
 SortIncludes: Never
